@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import About from '@/components/landing/About.vue';
 import Home from '@/components/landing/Home.vue';
 import NavBar from '@/components/landing/NavBar.vue';
 
@@ -18,4 +19,5 @@ withDefaults(
 <template>
     <NavBar />
     <Home />
+    <About />
 </template>
