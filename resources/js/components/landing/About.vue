@@ -45,7 +45,7 @@ const toggleMission = () => {
     <div class="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2">
       
       <!-- Vision Card -->
-      <div class="flex h-full flex-col items-start rounded-md bg-white py-10 shadow-xl">
+      <div class="flex h-full flex-col items-start rounded-2xl bg-white py-10 shadow-xl">
         
         <!-- Full-width Blue Background Banner (Padding adjusted & Icon moved inside) -->
         <div class="relative mb-8 flex w-full items-center bg-[#2095E0] p-1 py-4 pl-28 pr-6 shadow-sm sm:pl-32">
@@ -75,7 +75,7 @@ const toggleMission = () => {
       </div>
 
       <!-- Mission Card -->
-      <div class="flex h-full flex-col items-start rounded-md bg-white py-10 shadow-xl">
+      <div class="flex h-full flex-col items-start rounded-2xl bg-white py-10 shadow-xl">
         
         <!-- Full-width Blue Background Banner (Padding adjusted & Icon moved inside) -->
         <div class="relative mb-8 flex w-full items-center bg-[#2095E0] p-1 py-4 pl-28 pr-6 shadow-sm sm:pl-32">
