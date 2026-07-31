@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import Autoplay from 'embla-carousel-autoplay'
+import { ref } from 'vue'
 import {
   Carousel,
   CarouselContent,
