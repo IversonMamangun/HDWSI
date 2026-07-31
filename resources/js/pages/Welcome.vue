@@ -2,6 +2,7 @@
 import About from '@/components/landing/About.vue';
 import Home from '@/components/landing/Home.vue';
 import NavBar from '@/components/landing/NavBar.vue';
+import Traditional from '@/components/landing/Traditional.vue';
 
 // import { Head, Link } from '@inertiajs/vue3';
 // import { dashboard, login, register } from '@/routes';
@@ -20,4 +21,5 @@ withDefaults(
     <NavBar />
     <Home />
     <About />
+    <Traditional />
 </template>
