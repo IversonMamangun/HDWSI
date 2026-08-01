@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import About from '@/components/landing/About.vue';
+import HdwsiEducation from '@/components/landing/HdwsiEducation.vue';
 import Home from '@/components/landing/Home.vue';
 import NavBar from '@/components/landing/NavBar.vue';
 import Traditional from '@/components/landing/Traditional.vue';
@@ -21,4 +22,5 @@ withDefaults(
     <Home />
     <About />
     <Traditional />
+    <HdwsiEducation />
 </template>
