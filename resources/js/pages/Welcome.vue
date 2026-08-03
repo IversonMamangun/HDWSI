@@ -2,6 +2,7 @@
 import About from '@/components/landing/About.vue';
 import HdwsiEducation from '@/components/landing/HdwsiEducation.vue';
 import Home from '@/components/landing/Home.vue';
+import LearnPath from '@/components/landing/LearnPath.vue';
 import NavBar from '@/components/landing/NavBar.vue';
 import Traditional from '@/components/landing/Traditional.vue';
 // import { Head, Link } from '@inertiajs/vue3';
@@ -23,4 +24,5 @@ withDefaults(
     <About />
     <Traditional />
     <HdwsiEducation />
+    <LearnPath />
 </template>
