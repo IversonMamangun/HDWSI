@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import About from '@/components/landing/About.vue';
+import ContactUs from '@/components/landing/ContactUs.vue';
 import HdwsiEducation from '@/components/landing/HdwsiEducation.vue';
 import Home from '@/components/landing/Home.vue';
 import LearnPath from '@/components/landing/LearnPath.vue';
@@ -25,4 +26,5 @@ withDefaults(
     <Traditional />
     <HdwsiEducation />
     <LearnPath />
+    <ContactUs />
 </template>
