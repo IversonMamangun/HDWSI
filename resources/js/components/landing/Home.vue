@@ -124,7 +124,6 @@ const carouselItems = ref([
       </div>
 
       <div class="w-full relative px-2">
-        <!-- Added align: 'start' to the opts to prevent the last card from getting cut in half -->
         <Carousel 
           class="w-full" 
           :opts="{ loop: true, align: 'start' }" 

@@ -62,7 +62,6 @@ const setActive = (linkName: string, sectionId: string) => {
   >
     <div class="flex items-center justify-between px-4 py-3">
 
-      <!-- Logo -->
       <a
         href="#"
         @click.prevent="setActive('Home', 'home')"
@@ -75,7 +74,6 @@ const setActive = (linkName: string, sectionId: string) => {
         />
       </a>
 
-      <!-- Desktop Navigation -->
       <div class="hidden flex-1 justify-center xl:flex">
         <div class="flex items-center gap-4">
           <a
@@ -95,10 +93,8 @@ const setActive = (linkName: string, sectionId: string) => {
         </div>
       </div>
 
-      <!-- Right Side -->
       <div class="flex items-center gap-2">
 
-        <!-- Login -->
         <Link
           :href="login()"
           class="hidden rounded-md bg-hdwsi-teal px-5 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:opacity-90 active:scale-95 xl:inline-flex"
@@ -106,7 +102,6 @@ const setActive = (linkName: string, sectionId: string) => {
           Log in
         </Link>
 
-        <!-- Dark Mode -->
         <button
           @click="toggleDarkMode"
           class="flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-blue-50 dark:hover:bg-neutral-800"
@@ -144,7 +139,6 @@ const setActive = (linkName: string, sectionId: string) => {
           </svg>
         </button>
 
-        <!-- Mobile Menu -->
         <button
           @click="toggleMenu"
           class="flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-blue-50 xl:hidden dark:hover:bg-neutral-800"
@@ -176,7 +170,6 @@ const setActive = (linkName: string, sectionId: string) => {
       </div>
     </div>
 
-    <!-- Mobile Menu -->
     <transition name="menu-slide">
       <div
         v-show="isMenuOpen"

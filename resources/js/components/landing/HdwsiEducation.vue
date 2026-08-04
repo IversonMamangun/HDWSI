@@ -62,12 +62,10 @@ const visibleItems = computed(() => {
 </script>
 
 <template>
-  <!-- Swapped background gradient colors: left/right are now #104C7D and middle is #2095E0 -->
   <section class="relative w-full bg-gradient-to-r from-[#104C7D] via-[#2095E0] to-[#104C7D] py-20 overflow-x-hidden">
     
     <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
       
-      <!-- Header Section -->
       <div class="flex flex-col items-center text-center text-white mb-14">
         <h2 class="text-3xl md:text-5xl font-black uppercase tracking-wide">
           HDWSI Education
@@ -77,16 +75,13 @@ const visibleItems = computed(() => {
         </p>
       </div>
 
-      <!-- Grid Cards Container -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         
-        <!-- Changed to aspect-[4/3] (a 3/4 style box shape) and a slightly darker blue background -->
         <div 
           v-for="item in visibleItems" 
           :key="item.id"
           class="aspect-[4/3] flex flex-col items-start justify-start rounded-xl border-2 border-gray-300 bg-[#1672AB] p-6 sm:p-8 shadow-lg transition-transform duration-300 hover:-translate-y-1"
         >
-          <!-- Icon at Top Left -->
           <div class="mb-5 flex-shrink-0">
             <img 
               :src="item.icon" 
@@ -95,7 +90,6 @@ const visibleItems = computed(() => {
             />
           </div>
           
-          <!-- Title Below Icon -->
           <h3 class="text-xl sm:text-2xl font-bold leading-tight text-white mt-auto pb-4">
             {{ item.title }}
           </h3>
@@ -103,7 +97,6 @@ const visibleItems = computed(() => {
 
       </div>
 
-      <!-- See More / See Less Button -->
       <div class="mt-12 flex justify-center">
         <button 
           @click="showAll = !showAll"

@@ -66,7 +66,6 @@ const pathways = ref([
 <template>
   <section class="w-full pb-20 overflow-x-hidden bg-gray-50 pt-10">
     
-    <!-- Header Container: max-w-7xl with full-width image inside -->
     <div class="relative w-full max-w-7xl mx-auto overflow-hidden rounded-xl shadow-lg border border-gray-200 mb-10">
   <img 
     src="/assets/front-page/IMAGE/Learning Pathways.png" 
@@ -84,7 +83,6 @@ const pathways = ref([
 </div>
 
     
-    <!-- Carousel Section -->
     <div class="mx-auto w-full max-w-7xl px-4 sm:px-12 relative">
       <Carousel 
         class="w-full" 
@@ -101,10 +99,8 @@ const pathways = ref([
             class="pl-6 basis-full md:basis-1/2 lg:basis-1/3 flex"
           >
             
-            <!-- Card Container: Removed forced aspect ratio so it wraps tightly -->
             <div class="flex w-full flex-col overflow-hidden rounded-xl bg-white shadow-lg shadow-blue-300 border border-gray-200">
               
-              <!-- Image Box (Maintains 1:1 square ratio for the image itself) -->
               <div class="aspect-square w-full">
                 <img 
                   :src="item.image" 
@@ -113,7 +109,6 @@ const pathways = ref([
                 />
               </div>
               
-              <!-- Title Text Area (Tight padding, no extra empty space below) -->
               <div class="flex items-center justify-center px-4 py-5 text-center">
                 <h3 class="text-xl sm:text-2xl font-extrabold text-[#2095E0] leading-tight">
                   {{ item.title }}
@@ -125,7 +120,6 @@ const pathways = ref([
           </CarouselItem>
         </CarouselContent>
         
-        <!-- Custom Navigation Arrows -->
         <CarouselPrevious class="h-10 w-10 sm:h-12 sm:w-12 border-0 bg-transparent hover:bg-transparent -left-4 sm:-left-12 shadow-none">
           <img src="/assets/front-page/ICONS/arrow1.png" alt="Previous" class="h-full w-full object-contain transition-transform hover:scale-105" />
         </CarouselPrevious>
