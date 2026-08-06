@@ -34,41 +34,41 @@ const submitForm = () => {
 
           <div class="space-y-6">
             <div class="flex items-center space-x-4">
-              <div class="flex-shrink-0">
-                <img src="assets/front-page/ICONS/Phone.png" alt="Phone Icon" class="h-6 w-6 object-contain" />
+              <div class="flex-shrink-0 bg-[#2095E0] p-3 rounded-lg">
+                <img src="assets/front-page/ICONS/Phone.png" alt="Phone Icon" class="h-10 w-10 object-contain" />
               </div>
               <div>
                 <p class="text-lg font-medium">Phone</p>
-                <p class="text-gray-300">+63 123 456 7890</p>
+                <p class="text-gray-300">+63 45 963 2025</p>
               </div>
             </div>
 
             <div class="flex items-center space-x-4">
-              <div class="flex-shrink-0">
-                <img src="assets/front-page/ICONS/Email.png" alt="Email Icon" class="h-6 w-6 object-contain" />
+              <div class="flex-shrink-0 bg-[#289F7F] p-3 rounded-lg">
+                <img src="assets/front-page/ICONS/Email.png" alt="Email Icon" class="h-10 w-10 object-contain" />
               </div>
               <div>
                 <p class="text-lg font-medium">Email</p>
-                <p class="text-gray-300">contact@hdwsi.org</p>
+                <p class="text-gray-300">info@hdwsi.org</p>
               </div>
             </div>
 
             <div class="flex items-center space-x-4">
-              <div class="flex-shrink-0">
-                <img src="assets/front-page/ICONS/Location.png" alt="Location Icon" class="h-6 w-6 object-contain" />
+              <div class="flex-shrink-0 p-3 rounded-lg bg-[#A4C52F]">
+                <img src="assets/front-page/ICONS/Location.png" alt="Location Icon" class="h-10 w-10 object-contain" />
               </div>
               <div>
                 <p class="text-lg font-medium">Location</p>
-                <p class="text-gray-300">Global Center, Main Street, City</p>
+                <p class="text-gray-300">Unit D, 2nd Floor Plaza Victoria Bldg., Sto. Domingo St, Angeles City 2009 Philippines</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="bg-white/10 backdrop-blur-md p-8 rounded-xl shadow-lg border border-white/20">
+        <div class="bg-white p-8 rounded-3xl shadow-lg border border-[#2095E0]">
           <form @submit.prevent="submitForm" class="space-y-6">
             <div>
-              <label for="name" class="block text-sm font-medium text-gray-200">Name</label>
+              <label for="name" class="block text-sm font-medium text-gray-500">Name</label>
               <input 
                 type="text" 
                 id="name" 
@@ -80,7 +80,7 @@ const submitForm = () => {
             </div>
 
             <div>
-              <label for="email" class="block text-sm font-medium text-gray-200">Email</label>
+              <label for="email" class="block text-sm font-medium text-gray-500">Email</label>
               <input 
                 type="email" 
                 id="email" 
@@ -92,7 +92,7 @@ const submitForm = () => {
             </div>
 
             <div>
-              <label for="subject" class="block text-sm font-medium text-gray-200">Subject</label>
+              <label for="subject" class="block text-sm font-medium text-gray-500">Subject</label>
               <input 
                 type="text" 
                 id="subject" 
@@ -104,12 +104,12 @@ const submitForm = () => {
             </div>
 
             <div>
-              <label for="message" class="block text-sm font-medium text-gray-200">Message</label>
+              <label for="message" class="block text-sm font-medium text-gray-500">Message</label>
               <textarea 
                 id="message" 
                 v-model="form.message" 
                 rows="4" 
-                class="mt-1 w-full rounded-md border border-gray-500 bg-white/5 px-4 py-2 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500" 
+                class="mt-1 w-full rounded-md border border-gray-500 bg-white/5 px-4 py-2 text-gray-700 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500" 
                 placeholder="Your message here..."
                 required
               ></textarea>
