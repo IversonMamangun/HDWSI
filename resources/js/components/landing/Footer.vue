@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-
 const currentYear = computed(() => new Date().getFullYear());
-
 </script>
 
 <template>
-      <section class="w-full bg-gradient-to-r from-[#104C7D] via-[#2095E0] to-[#104C7D] py-20 text-white overflow-hidden">
+  <section class="w-full bg-gradient-to-r from-[#104C7D] via-[#2095E0] to-[#104C7D] py-20 text-white overflow-hidden">
     
     <div class="mx-auto flex w-full max-w-6xl flex-col justify-around gap-16 px-4 sm:px-6 lg:flex-row lg:gap-24 lg:px-8">
       
@@ -62,20 +60,26 @@ const currentYear = computed(() => new Date().getFullYear());
     </div>
     
   </section>
-  <footer class="w-full bg-[#2095E0] p-5 text-white overflow-hidden border-t-5 border-white">
-     <h2>
-      © {{ currentYear }} HUMAN-CENTERED DIGITAL WELLNESS AND SOCIAL INTELLIGENCE. All Rights Reserved.
-     </h2>
-     <div>
-                Designed & Developed by 
-                <a 
-                    class="hover:underline font-semibold" 
-                    href="https://bb88advertising.com/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                >
-                    BB 88 Advertising and Digital Solutions Inc.
-                </a>
-            </div>
+
+  <footer class="w-full border-t-[5px] border-white bg-[#2095E0] px-4 py-6 text-white sm:px-6 lg:px-8">
+    <div class="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
+      
+      <h2 class="text-sm font-medium md:text-base">
+        © {{ currentYear }} HUMAN-CENTERED DIGITAL WELLNESS AND SOCIAL INTELLIGENCE. All Rights Reserved.
+      </h2>
+      
+      <div class="text-sm md:text-base">
+        Designed & Developed by 
+        <a 
+          class="font-semibold transition-colors hover:text-gray-200 hover:underline" 
+          href="https://bb88advertising.com/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          BB 88 Advertising and Digital Solutions Inc.
+        </a>
+      </div>
+
+    </div>
   </footer>
 </template>
