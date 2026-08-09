@@ -8,8 +8,9 @@ import {
 } from '@internationalized/date';
 import type { CalendarDate } from '@internationalized/date';
 import { CalendarIcon } from '@lucide/vue';
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import InputError from '@/components/InputError.vue';
+import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -20,6 +21,13 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from '@/components/ui/popover';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import AuthBase from '@/layouts/AuthLayout.vue';
 import { cn } from '@/lib/utils';
@@ -87,7 +95,7 @@ const isLastStep = computed(() => currentStep.value === steps.length - 1);
 // Date of birth handling
 const df = new DateFormatter('en-US', { dateStyle: 'long' });
 const maxDate = today(getLocalTimeZone());
-const defaultPlaceholder = maxDate.subtract({ years: 18 });
+const defaultPlaceholder = maxDate.subtract({ years: 14 });
 const dateValue = computed({
     get: () => (form.date_of_birth ? parseDate(form.date_of_birth) : undefined),
     set: (value: CalendarDate | undefined) => {
@@ -125,29 +133,16 @@ const form = useForm({
 }).withPrecognition('post', '/register/validate');
 
 const showValidatingSpinner = ref(false);
-let spinnerTimer: ReturnType<typeof setTimeout> | null = null;
-
-watch(
-    () => form.validating,
-    (validating) => {
-        if (validating) {
-            spinnerTimer = setTimeout(() => {
-                showValidatingSpinner.value = true;
-            }, 200);
-        } else {
-            if (spinnerTimer) {
-                clearTimeout(spinnerTimer);
-            }
-
-            showValidatingSpinner.value = false;
-        }
-    },
-);
 
 function next() {
+    showValidatingSpinner.value = true;
+
     form.validate({
         only: steps[currentStep.value].fields,
         onSuccess: () => (currentStep.value += 1),
+        onFinish: () => {
+            showValidatingSpinner.value = false;
+        },
     });
 }
 
