@@ -101,7 +101,7 @@ trait ProfileValidationRules
      */
     protected function dateOfBirthRules(): array
     {
-        return ['required', 'date', 'before:-18 years'];
+        return ['required', 'date', 'before_or_equal:today'];
     }
 
     /**
