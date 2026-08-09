@@ -6,7 +6,7 @@ import NavBar from '@/components/landing/NavBar.vue';
 </script>
 
 <template>
-  <Head title="Research" />
+  <Head title="Admission" />
 
   <div class="min-h-screen bg-gray-50 dark:bg-neutral-900">
     <NavBar />

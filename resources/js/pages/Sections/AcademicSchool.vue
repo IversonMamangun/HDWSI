@@ -6,12 +6,11 @@ import NavBar from '@/components/landing/NavBar.vue';
 </script>
 
 <template>
-  <Head title="Academic School - HDWSI" />
+  <Head title="Academic School" />
 
   <div class="min-h-screen bg-gray-50 dark:bg-neutral-900">
     <NavBar />
     
-    <!-- Render your component here -->
     <main class="pt-24">
 
     </main>
