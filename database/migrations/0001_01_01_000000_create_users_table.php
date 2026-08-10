@@ -15,12 +15,13 @@ return new class extends Migration {
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('phone_number')->nullable();
+            $table->string('phone_number')->unique()->nullable();
             $table->timestamp('phone_number_verified_at')->nullable();
             $table->string('address')->nullable();
             $table->date('date_of_birth')->nullable();
+            $table->boolean('is_minor')->default(false);
             $table->string('id_type')->nullable();
             $table->string('id_number')->nullable();
             $table->string('password');
