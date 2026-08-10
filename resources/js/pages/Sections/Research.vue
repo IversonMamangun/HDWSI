@@ -14,6 +14,7 @@ import NavBar from '@/components/landing/NavBar.vue';
     <main class="pt-24">
 
     </main>
-    <Footer />
   </div>
+    <Footer />
+
 </template>
