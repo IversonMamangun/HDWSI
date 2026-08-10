@@ -44,63 +44,63 @@ import NavBar from '@/components/landing/NavBar.vue';
             
             <ul class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               
-              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-lg">
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
                 <div class="h-full rounded-2xl p-6 sm:p-8 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
                   <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
                   Physical Wellness
                 </div>
               </li>
 
-              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-lg">
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
                 <div class="h-full rounded-2xl p-6 sm:p-8 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
                   <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
                   Mental Wellness
                 </div>
               </li>
 
-              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-lg">
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
                 <div class="h-full rounded-2xl p-6 sm:p-8 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
                   <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
                   Emotional Wellness
                 </div>
               </li>
 
-              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-lg">
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
                 <div class="h-full rounded-2xl p-6 sm:p-8 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
                   <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
                   Cognitive Wellness
                 </div>
               </li>
 
-              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-lg">
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
                 <div class="h-full rounded-2xl p-6 sm:p-8 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
                   <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
                   Lifestyle Medicine
                 </div>
               </li>
 
-              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-lg">
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
                 <div class="h-full rounded-2xl p-6 sm:p-8 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
                   <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
                   Sleep Science
                 </div>
               </li>
 
-              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-lg">
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
                 <div class="h-full rounded-2xl p-6 sm:p-8 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
                   <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
                   Stress Management
                 </div>
               </li>
 
-              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-lg">
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
                 <div class="h-full rounded-2xl p-6 sm:p-8 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
                   <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
                   Mindfulness
                 </div>
               </li>
 
-              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-lg">
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
                 <div class="h-full rounded-2xl p-6 sm:p-8 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
                   <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
                   Digital Detox
@@ -110,7 +110,7 @@ import NavBar from '@/components/landing/NavBar.vue';
           </div>
 
           <div class="w-full lg:w-1/3 flex justify-center mt-8 lg:mt-0">
-            <div class="w-full max-w-[400px] aspect-square rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-2xl">
+            <div class="w-full max-w-[400px] aspect-square rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-2xl">
               <div class="w-full h-full rounded-2xl overflow-hidden bg-gray-200">
                 <img 
                   src="/assets/academic school assets/2.jpg" 
