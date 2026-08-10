@@ -24,6 +24,11 @@ return new class extends Migration {
             $table->boolean('is_minor')->default(false);
             $table->string('id_type')->nullable();
             $table->string('id_number')->nullable();
+            $table->timestamp('approved_at')->nullable();
+            $table->foreignId('approved_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->timestamp('rejected_at')->nullable();
+            $table->foreignId('rejected_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->string('rejection_reason')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

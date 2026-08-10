@@ -7,6 +7,7 @@ use App\Policies\ApplicationPolicy;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -56,6 +57,8 @@ class User extends Authenticatable implements HasMedia
         'address',
         'id_type',
         'id_number',
+        'approved_at',
+        'approved_by',
     ];
 
     /**
@@ -85,6 +88,7 @@ class User extends Authenticatable implements HasMedia
             'date_of_birth' => 'date',
             'is_minor' => 'boolean',
             'id_number' => 'encrypted',
+            'approved_at' => 'datetime',
         ];
     }
 
@@ -148,6 +152,22 @@ class User extends Authenticatable implements HasMedia
     public static function isMinorForDateOfBirth(?string $dateOfBirth): bool
     {
         return $dateOfBirth ? Carbon::parse($dateOfBirth)->age < 18 : false;
+    }
+
+    /**
+     * The user who approved this applicant (if any).
+     */
+    public function approvedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    /**
+     * The user who rejected this applicant (if any).
+     */
+    public function rejectedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'rejected_by');
     }
 
     /**
