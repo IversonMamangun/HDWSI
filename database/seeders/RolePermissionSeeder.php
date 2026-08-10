@@ -38,6 +38,7 @@ class RolePermissionSeeder extends Seeder
                     PermissionEnum::ROLES_MANAGE->value,
                     PermissionEnum::PERMISSIONS_MANAGE->value,
                     PermissionEnum::SETTINGS_MANAGE->value,
+                    PermissionEnum::ADMISSION_MANAGE_APPLICATIONS->value,
                 ], true)
             ),
 
