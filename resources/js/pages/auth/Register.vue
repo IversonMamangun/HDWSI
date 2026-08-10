@@ -7,11 +7,20 @@ import {
     today,
 } from '@internationalized/date';
 import type { CalendarDate } from '@internationalized/date';
-import { CalendarIcon } from '@lucide/vue';
-import { computed, ref } from 'vue';
+import { CalendarIcon, FileTextIcon, XIcon, UploadIcon } from '@lucide/vue';
+import { computed, ref, watch } from 'vue';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
+import {
+    Attachment,
+    AttachmentAction,
+    AttachmentActions,
+    AttachmentContent,
+    AttachmentDescription,
+    AttachmentMedia,
+    AttachmentTitle,
+} from '@/components/ui/attachment';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
@@ -45,7 +54,7 @@ defineProps<{
 
 const page = usePage();
 
-const steps = [
+const baseSteps = [
     {
         label: 'Personal info',
         shortLabel: 'Personal',
@@ -69,28 +78,40 @@ const steps = [
         fields: ['id_type', 'id_number'],
     },
     {
+        label: 'Guardian details',
+        shortLabel: 'Guardian',
+        fields: [
+            'guardian_email',
+            'guardian_first_name',
+            'guardian_last_name',
+            'guardian_relationship',
+        ],
+    },
+    {
         label: 'Security',
         shortLabel: 'Security',
         fields: ['password', 'password_confirmation'],
     },
 ] as const;
 
-function initialStepFromErrors(): number {
-    const erroredFields = Object.keys(page.props.errors ?? {});
-
-    if (erroredFields.length === 0) {
-        return 0;
-    }
-
-    const stepIndex = steps.findIndex((step) =>
-        step.fields.some((field) => erroredFields.includes(field)),
-    );
-
-    return stepIndex === -1 ? 0 : stepIndex;
-}
-
-const currentStep = ref(initialStepFromErrors());
-const isLastStep = computed(() => currentStep.value === steps.length - 1);
+const form = useForm({
+    first_name: '',
+    middle_name: '',
+    last_name: '',
+    email: '',
+    phone_number: '',
+    date_of_birth: '',
+    address: '',
+    id_type: '',
+    id_number: '',
+    id_document: null as File | null,
+    guardian_email: '',
+    guardian_first_name: '',
+    guardian_last_name: '',
+    guardian_relationship: '',
+    password: '',
+    password_confirmation: '',
+}).withPrecognition('post', '/register/validate');
 
 // Date of birth handling
 const df = new DateFormatter('en-US', { dateStyle: 'long' });
@@ -118,19 +139,75 @@ const age = computed(() => {
     return years >= 0 ? String(years) : '';
 });
 
-const form = useForm({
-    first_name: '',
-    middle_name: '',
-    last_name: '',
-    email: '',
-    phone_number: '',
-    date_of_birth: '',
-    address: '',
-    id_type: '',
-    id_number: '',
-    password: '',
-    password_confirmation: '',
-}).withPrecognition('post', '/register/validate');
+const isMinor = computed(() => age.value !== '' && Number(age.value) < 18);
+
+// Steps list adapts to whether a guardian step is needed
+const steps = computed(() =>
+    isMinor.value
+        ? baseSteps
+        : baseSteps.filter((s) => s.label !== 'Guardian details'),
+);
+
+// Resolve each section's index dynamically instead of hardcoding numbers,
+// since Guardian's presence shifts every index after it.
+const personalStepIndex = computed(() =>
+    steps.value.findIndex((s) => s.label === 'Personal info'),
+);
+const addressStepIndex = computed(() =>
+    steps.value.findIndex((s) => s.label === 'Address'),
+);
+const identityStepIndex = computed(() =>
+    steps.value.findIndex((s) => s.label === 'Identity verification'),
+);
+const guardianStepIndex = computed(() =>
+    steps.value.findIndex((s) => s.label === 'Guardian details'),
+);
+const securityStepIndex = computed(() =>
+    steps.value.findIndex((s) => s.label === 'Security'),
+);
+
+// If minor status flips, clear fields that no longer apply so stale
+// data never travels with the submission.
+watch(isMinor, (nowMinor, wasMinor) => {
+    if (nowMinor === wasMinor) return;
+
+    if (nowMinor) {
+        // became a minor — adult-only ID fields no longer required/relevant
+        form.id_type = '';
+        form.id_number = '';
+    } else {
+        // became an adult — guardian fields no longer relevant
+        form.guardian_email = '';
+        form.guardian_first_name = '';
+        form.guardian_last_name = '';
+        form.guardian_relationship = '';
+    }
+
+    // Also drop the currentStep back to a valid index for the new step list,
+    // in case the user was sitting on a step index that just shifted.
+    if (currentStep.value >= steps.value.length) {
+        currentStep.value = steps.value.length - 1;
+    }
+});
+
+function initialStepFromErrors(): number {
+    const erroredFields = Object.keys(page.props.errors ?? {});
+
+    if (erroredFields.length === 0) {
+        return 0;
+    }
+
+    const stepIndex = steps.value.findIndex((step) =>
+        step.fields.some((field) => erroredFields.includes(field)),
+    );
+
+    return stepIndex === -1 ? 0 : stepIndex;
+}
+
+const currentStep = ref(initialStepFromErrors());
+const isLastStep = computed(
+    () => currentStep.value === steps.value.length - 1,
+);
 
 const showValidatingSpinner = ref(false);
 
@@ -138,7 +215,7 @@ function next() {
     showValidatingSpinner.value = true;
 
     form.validate({
-        only: steps[currentStep.value].fields,
+        only: steps.value[currentStep.value].fields,
         onSuccess: () => (currentStep.value += 1),
         onFinish: () => {
             showValidatingSpinner.value = false;
@@ -151,7 +228,7 @@ function submit() {
         onSuccess: () => form.reset('password', 'password_confirmation'),
         onError: (errors) => {
             const erroredFields = Object.keys(errors);
-            const stepIndex = steps.findIndex((step) =>
+            const stepIndex = steps.value.findIndex((step) =>
                 step.fields.some((field) => erroredFields.includes(field)),
             );
 
@@ -161,6 +238,37 @@ function submit() {
         },
     });
 }
+
+const idDocumentInput = ref<HTMLInputElement | null>(null);
+
+function selectIdDocument() {
+    idDocumentInput.value?.click();
+}
+
+function onIdDocumentChange(e: Event) {
+    const file = (e.target as HTMLInputElement).files?.[0] ?? null;
+    form.id_document = file;
+    if (file) {
+        form.validate('id_document');
+    }
+}
+
+function removeIdDocument() {
+    form.id_document = null;
+    if (idDocumentInput.value) idDocumentInput.value.value = '';
+}
+
+function formatFileSize(bytes: number): string {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+const idDocumentMeta = computed(() => {
+    if (!form.id_document) return '';
+    const ext = form.id_document.name.split('.').pop()?.toUpperCase() ?? '';
+    return `${ext} · ${formatFileSize(form.id_document.size)}`;
+});
 </script>
 
 <template>
@@ -208,8 +316,8 @@ function submit() {
             </div>
 
             <div class="grid gap-6">
-                <!-- Step 1: Personal info -->
-                <div v-show="currentStep === 0" class="grid gap-6">
+                <!-- Step: Personal info -->
+                <div v-show="currentStep === personalStepIndex" class="grid gap-6">
                     <div class="grid gap-2">
                         <Label for="first_name">First name</Label>
                         <Input
@@ -270,7 +378,6 @@ function submit() {
                             id="email"
                             v-model="form.email"
                             type="email"
-                            required
                             autocomplete="email"
                             placeholder="email@example.com"
                             :aria-invalid="form.invalid('email')"
@@ -288,7 +395,6 @@ function submit() {
                             id="phone_number"
                             v-model="form.phone_number"
                             type="tel"
-                            required
                             autocomplete="tel"
                             placeholder="09XX XXX XXXX"
                             :aria-invalid="form.invalid('phone_number')"
@@ -367,10 +473,18 @@ function submit() {
                             />
                         </div>
                     </div>
+
+                    <p
+                        v-if="isMinor"
+                        class="text-sm text-muted-foreground"
+                    >
+                        Since you're under 18, we'll also ask for a parent or
+                        guardian's details later in this form.
+                    </p>
                 </div>
 
-                <!-- Step 2: Address & employment -->
-                <div v-show="currentStep === 1" class="grid gap-6">
+                <!-- Step: Address -->
+                <div v-show="currentStep === addressStepIndex" class="grid gap-6">
                     <div class="grid gap-2">
                         <Label for="address">Home address</Label>
                         <Input
@@ -390,13 +504,20 @@ function submit() {
                     </div>
                 </div>
 
-                <!-- Step 3: Identity verification -->
-                <div v-show="currentStep === 2" class="grid gap-6">
+                <!-- Step: Identity verification -->
+                <div v-show="currentStep === identityStepIndex" class="grid gap-6">
                     <div class="grid gap-2">
-                        <Label for="id_type">Government ID type</Label>
+                        <Label for="id_type"
+                            >Government ID type
+                            <span
+                                v-if="isMinor"
+                                class="font-normal text-muted-foreground"
+                                >(optional)</span
+                            ></Label
+                        >
                         <Select
                             v-model="form.id_type"
-                            required
+                            :required="!isMinor"
                             @update:model-value="form.validate('id_type')"
                         >
                             <SelectTrigger
@@ -428,7 +549,7 @@ function submit() {
                             id="id_number"
                             v-model="form.id_number"
                             type="text"
-                            required
+                            :required="!isMinor && !!form.id_type"
                             placeholder="Enter ID number"
                             :aria-invalid="form.invalid('id_number')"
                             @blur="form.validate('id_number')"
@@ -438,10 +559,161 @@ function submit() {
                             :message="form.errors.id_number"
                         />
                     </div>
+
+<div class="grid gap-2">
+    <Label for="id_document"
+        >Upload a photo or scan of your ID
+        <span v-if="isMinor" class="font-normal text-muted-foreground"
+            >(optional)</span
+        ></Label
+    >
+
+    <input
+        id="id_document"
+        ref="idDocumentInput"
+        type="file"
+        accept="image/jpeg,image/png,application/pdf"
+        class="hidden"
+        @change="onIdDocumentChange"
+    />
+
+    <button
+        v-if="!form.id_document"
+        type="button"
+        class="flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-6 text-sm text-muted-foreground hover:bg-muted/40"
+        :aria-invalid="form.invalid('id_document')"
+        @click="selectIdDocument"
+    >
+        <UploadIcon class="h-5 w-5" />
+        Click to select a file (JPG, PNG, or PDF, max 5MB)
+    </button>
+
+    <Attachment
+        v-else
+        :state="form.progress ? 'uploading' : 'idle'"
+        class="w-full"
+    >
+        <AttachmentMedia>
+            <FileTextIcon />
+        </AttachmentMedia>
+        <AttachmentContent>
+            <AttachmentTitle>{{ form.id_document.name }}</AttachmentTitle>
+            <AttachmentDescription>
+                {{
+                    form.progress
+                        ? `Uploading · ${form.progress.percentage}%`
+                        : idDocumentMeta
+                }}
+            </AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+            <AttachmentAction
+                aria-label="Remove selected ID document"
+                @click="removeIdDocument"
+            >
+                <XIcon />
+            </AttachmentAction>
+        </AttachmentActions>
+    </Attachment>
+
+    <InputError
+        v-if="form.invalid('id_document')"
+        :message="form.errors.id_document"
+    />
+</div>
                 </div>
 
-                <!-- Step 4: Security -->
-                <div v-show="currentStep === 3" class="grid gap-6">
+                <!-- Step: Guardian details (minors only) -->
+                <div
+                    v-if="isMinor"
+                    v-show="currentStep === guardianStepIndex"
+                    class="grid gap-6"
+                >
+                    <p class="text-sm text-muted-foreground">
+                        Since you're under 18, we need a parent or legal
+                        guardian's consent before your application can be
+                        submitted.
+                    </p>
+
+                    <div class="grid gap-2">
+                        <Label for="guardian_first_name"
+                            >Guardian first name</Label
+                        >
+                        <Input
+                            id="guardian_first_name"
+                            v-model="form.guardian_first_name"
+                            type="text"
+                            required
+                            :aria-invalid="
+                                form.invalid('guardian_first_name')
+                            "
+                            @blur="form.validate('guardian_first_name')"
+                        />
+                        <InputError
+                            v-if="form.invalid('guardian_first_name')"
+                            :message="form.errors.guardian_first_name"
+                        />
+                    </div>
+
+                    <div class="grid gap-2">
+                        <Label for="guardian_last_name"
+                            >Guardian last name</Label
+                        >
+                        <Input
+                            id="guardian_last_name"
+                            v-model="form.guardian_last_name"
+                            type="text"
+                            required
+                            :aria-invalid="form.invalid('guardian_last_name')"
+                            @blur="form.validate('guardian_last_name')"
+                        />
+                        <InputError
+                            v-if="form.invalid('guardian_last_name')"
+                            :message="form.errors.guardian_last_name"
+                        />
+                    </div>
+
+                    <div class="grid gap-2">
+                        <Label for="guardian_email">Guardian email</Label>
+                        <Input
+                            id="guardian_email"
+                            v-model="form.guardian_email"
+                            type="email"
+                            required
+                            placeholder="guardian@example.com"
+                            :aria-invalid="form.invalid('guardian_email')"
+                            @blur="form.validate('guardian_email')"
+                        />
+                        <InputError
+                            v-if="form.invalid('guardian_email')"
+                            :message="form.errors.guardian_email"
+                        />
+                    </div>
+
+                    <div class="grid gap-2">
+                        <Label for="guardian_relationship"
+                            >Relationship to applicant</Label
+                        >
+                        <Input
+                            id="guardian_relationship"
+                            v-model="form.guardian_relationship"
+                            type="text"
+                            required
+                            placeholder="Mother, Father, Legal guardian, etc."
+                            :aria-invalid="
+                                form.invalid('guardian_relationship')
+                            "
+                            @blur="form.validate('guardian_relationship')"
+                        />
+                        <InputError
+                            v-if="form.invalid('guardian_relationship')"
+                            :message="form.errors.guardian_relationship"
+                        />
+                    </div>
+                </div>
+
+                <!-- Step: Security -->
+                <div v-show="currentStep === securityStepIndex" class="grid gap-6">
                     <div class="grid gap-2">
                         <Label for="password">Password</Label>
                         <PasswordInput

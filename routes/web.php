@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\RegistrationValidationController;
+use App\Http\Controllers\Guardian\GuardianConsentController;
+use App\Http\Controllers\IdDocumentController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -25,4 +27,17 @@ Route::post('register/validate', RegistrationValidationController::class)
     ->middleware(['guest', HandlePrecognitiveRequests::class])
     ->name('register.validate');
 
+Route::get('/guardian/consent/{applicant}', [GuardianConsentController::class, 'show'])
+    ->name('guardian.consent.show')
+    ->middleware('signed');
+
+Route::post('/guardian/consent/{applicant}', [GuardianConsentController::class, 'store'])
+    ->name('guardian.consent.store')
+    ->middleware('auth');
+
+Route::get('/applicants/{applicant}/id-document', [IdDocumentController::class, 'show'])
+    ->name('applicants.id-document.show')
+    ->middleware('auth');
+
 require __DIR__ . '/settings.php';
+require __DIR__ . '/admin.php';

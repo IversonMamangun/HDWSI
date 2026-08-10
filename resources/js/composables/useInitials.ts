@@ -1,16 +1,19 @@
 export type UseInitialsReturn = {
-    getInitials: (fullName?: string) => string;
+    getInitials: (firstName?: string, lastName?: string) => string;
 };
 
-export function getInitials(fullName?: string): string {
-    if (!fullName) return '';
+function getInitial(name?: string): string {
+    return Array.from(name?.trim() ?? '')[0] ?? '';
+}
 
-    const names = fullName.trim().split(' ');
+export function getInitials(
+    firstName?: string,
+    lastName?: string,
+): string {
+    const firstInitial = getInitial(firstName);
+    const lastInitial = getInitial(lastName);
 
-    if (names.length === 0) return '';
-    if (names.length === 1) return names[0].charAt(0).toUpperCase();
-
-    return `${names[0].charAt(0)}${names[names.length - 1].charAt(0)}`.toUpperCase();
+    return `${firstInitial}${lastInitial}`.toUpperCase();
 }
 
 export function useInitials(): UseInitialsReturn {

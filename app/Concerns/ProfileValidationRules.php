@@ -5,6 +5,7 @@ namespace App\Concerns;
 use App\Enums\IdType;
 use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
 trait ProfileValidationRules
@@ -21,11 +22,16 @@ trait ProfileValidationRules
             'middle_name' => $this->middleNameRules(),
             'last_name' => $this->lastNameRules(),
             'email' => $this->emailRules($userId, $isPrecognitive),
-            'phone_number' => $this->phoneNumberRules(),
+            'phone_number' => $this->phoneNumberRules($userId),
             'date_of_birth' => $this->dateOfBirthRules(),
             'address' => $this->addressRules(),
             'id_type' => $this->idTypeRules(),
             'id_number' => $this->idNumberRules(),
+            'id_document' => $this->idDocumentRules(),
+            'guardian_email' => $this->guardianEmailRules(),
+            'guardian_first_name' => $this->guardianFirstNameRules(),
+            'guardian_last_name' => $this->guardianLastNameRules(),
+            'guardian_relationship' => $this->guardianRelationshipRules(),
         ];
     }
 
@@ -72,7 +78,8 @@ trait ProfileValidationRules
     protected function emailRules(?int $userId = null, bool $isPrecognitive = false): array
     {
         return [
-            'required',
+            'required_without:phone_number',
+            'nullable',
             'string',
             'email',
             'max:255',
@@ -89,9 +96,17 @@ trait ProfileValidationRules
      *
      * @return array<int, ValidationRule|array<mixed>|string>
      */
-    protected function phoneNumberRules(): array
+    protected function phoneNumberRules(?int $userId = null): array
     {
-        return ['required', 'string', 'regex:/^(09|\+639)\d{9}$/'];
+        return [
+            'required_without:email',
+            'nullable',
+            'string',
+            'regex:/^(09|\+639)\d{9}$/',
+            $userId === null
+            ? Rule::unique(User::class)
+            : Rule::unique(User::class)->ignore($userId),
+        ];
     }
 
     /**
@@ -121,7 +136,11 @@ trait ProfileValidationRules
      */
     protected function idTypeRules(): array
     {
-        return ['required', Rule::enum(IdType::class)];
+        return [
+            Rule::requiredIf(fn() => !$this->isMinorInput()),
+            'nullable',
+            Rule::enum(IdType::class),
+        ];
     }
 
     /**
@@ -131,6 +150,70 @@ trait ProfileValidationRules
      */
     protected function idNumberRules(): array
     {
-        return ['required', 'string', 'max:50'];
+        return ['required_with:id_type', 'nullable', 'string', 'max:50'];
+    }
+
+    /**
+     * Get the validation rules used to validate government ID document.
+     *
+     * @return array<int, ValidationRule|array<mixed>|string>
+     */
+    protected function idDocumentRules(): array
+    {
+        return [
+            'nullable',
+            'file',
+            'mimes:jpg,jpeg,png,pdf',
+            'max:5120',
+        ];
+    }
+
+    /**
+     * Get the validation rules used to validate guardian email.
+     *
+     * @return array<int, ValidationRule|array<mixed>|string>
+     */
+    protected function guardianEmailRules(): array
+    {
+        return [Rule::requiredIf(fn() => $this->isMinorInput()), 'nullable', 'email', 'max:255'];
+    }
+
+    /**
+     * Get the validation rules used to validate guardian first name.
+     *
+     * @return array<int, ValidationRule|array<mixed>|string>
+     */
+    protected function guardianFirstNameRules(): array
+    {
+        return [Rule::requiredIf(fn() => $this->isMinorInput()), 'nullable', 'string', 'max:255'];
+    }
+
+    /**
+     * Get the validation rules used to validate guardian last name.
+     *
+     * @return array<int, ValidationRule|array<mixed>|string>
+     */
+    protected function guardianLastNameRules(): array
+    {
+        return [Rule::requiredIf(fn() => $this->isMinorInput()), 'nullable', 'string', 'max:255'];
+    }
+
+    /**
+     * Get the validation rules used to validate guardian relationship.
+     *
+     * @return array<int, ValidationRule|array<mixed>|string>
+     */
+    protected function guardianRelationshipRules(): array
+    {
+        return [Rule::requiredIf(fn() => $this->isMinorInput()), 'nullable', 'string', 'max:100'];
+    }
+
+    /**
+     * Reads date_of_birth directly from the request, since the User
+     * model doesn't exist yet at this point in registration.
+     */
+    protected function isMinorInput(): bool
+    {
+        return User::isMinorForDateOfBirth(request()->input('date_of_birth'));
     }
 }
