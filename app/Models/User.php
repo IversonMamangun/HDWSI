@@ -3,8 +3,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Policies\ApplicationPolicy;
-use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,7 +29,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $id_type
  * @property string|null $id_number
  */
-#[UsePolicy(ApplicationPolicy::class)]
 class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -59,6 +56,9 @@ class User extends Authenticatable implements HasMedia
         'id_number',
         'approved_at',
         'approved_by',
+        'rejected_at',
+        'rejected_by',
+        'rejection_reason',
     ];
 
     /**
@@ -89,6 +89,7 @@ class User extends Authenticatable implements HasMedia
             'is_minor' => 'boolean',
             'id_number' => 'encrypted',
             'approved_at' => 'datetime',
+            'rejected_at' => 'datetime',
         ];
     }
 
@@ -124,6 +125,7 @@ class User extends Authenticatable implements HasMedia
     public function guardians(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'guardian_applicant', 'applicant_id', 'guardian_id')
+            ->using(GuardianApplicant::class)
             ->withPivot(['relationship', 'consent_given_at'])
             ->withTimestamps();
     }
@@ -134,6 +136,7 @@ class User extends Authenticatable implements HasMedia
     public function linkedApplicants(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'guardian_applicant', 'guardian_id', 'applicant_id')
+            ->using(GuardianApplicant::class)
             ->withPivot(['relationship', 'consent_given_at'])
             ->withTimestamps();
     }
