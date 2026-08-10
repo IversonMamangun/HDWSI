@@ -13,6 +13,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -29,12 +31,13 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $id_number
  */
 #[UsePolicy(ApplicationPolicy::class)]
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, TwoFactorAuthenticatable;
 
     use HasRoles;
+    use InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -145,5 +148,21 @@ class User extends Authenticatable
     public static function isMinorForDateOfBirth(?string $dateOfBirth): bool
     {
         return $dateOfBirth ? Carbon::parse($dateOfBirth)->age < 18 : false;
+    }
+
+    /**
+     * Government ID document upload (a single photo/scan per user,
+     * stored privately — never publicly accessible by URL).
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('government_id')
+            ->singleFile()
+            ->useDisk('private')
+            ->acceptsMimeTypes([
+                'image/jpeg',
+                'image/png',
+                'application/pdf',
+            ]);
     }
 }
