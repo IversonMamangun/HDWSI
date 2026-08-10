@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import Footer from '@/components/landing/Footer.vue';
+import NavBar from '@/components/landing/NavBar.vue';
 </script>
 
 <template>
   <Head title="Academic School" />
-
+<NavBar />
   <div class="min-h-screen bg-gradient-to-bl from-[#104C7D] via-[#2095E0] to-[#104C7D] flex flex-col">
     
-    <main class="flex-grow w-full">
+    <main class="pt-24 flex-grow w-full">
       
       <div class="mx-auto relative w-full flex items-center justify-center h-[180px] sm:h-[150px] overflow-hidden shadow-lg">
         <img 
