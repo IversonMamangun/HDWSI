@@ -62,7 +62,7 @@ const visibleItems = computed(() => {
 </script>
 
 <template>
-  <section class="relative w-full bg-gradient-to-r from-[#104C7D] via-[#2095E0] to-[#104C7D] py-20 overflow-x-hidden">
+  <section class="relative w-full bg-gradient-to-bl from-[#104C7D] via-[#2095E0] to-[#104C7D] py-20 overflow-x-hidden">
     
     <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
       
@@ -80,7 +80,7 @@ const visibleItems = computed(() => {
         <div 
           v-for="item in visibleItems" 
           :key="item.id"
-          class="aspect-[4/3] flex flex-col items-start justify-start rounded-xl border-2 border-gray-300 bg-[#1672AB] p-6 sm:p-8 shadow-lg transition-transform duration-300 hover:-translate-y-1"
+          class="aspect-[4/3] flex flex-col items-start justify-start rounded-xl border-2 border-gray-300 g-gradient-to-r from-blue-300 to-[#104C7D p-6 sm:p-8 shadow-lg transition-transform duration-300 hover:-translate-y-1"
         >
           <div class="mb-5 flex-shrink-0">
             <img 

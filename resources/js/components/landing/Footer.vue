@@ -5,7 +5,7 @@ const currentYear = computed(() => new Date().getFullYear());
 </script>
 
 <template>
-  <section class="w-full bg-gradient-to-r from-[#104C7D] via-[#2095E0] to-[#104C7D] py-20 text-white overflow-hidden">
+  <section class="w-full bg-gradient-to-bl from-[#104C7D] via-[#2095E0] to-[#104C7D] py-20 text-white overflow-hidden">
     
     <div class="mx-auto flex w-full max-w-6xl flex-col justify-around gap-16 px-4 sm:px-6 lg:flex-row lg:gap-24 lg:px-8">
       

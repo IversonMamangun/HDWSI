@@ -23,7 +23,7 @@ const toggleMission = () => {
 </script>
 
 <template>
-  <section class="w-full bg-gradient-to-r from-[#104C7D] via-[#2095E0] to-[#104C7D] px-6 py-24 sm:px-8 lg:px-16">
+  <section class="w-full bg-gradient-to-bl from-[#104C7D] via-[#2095E0] to-[#104C7D] px-6 py-24 sm:px-8 lg:px-16">
     
     <div class="mx-auto max-w-4xl text-center text-white">
       <h2 class="text-xl font-bold uppercase tracking-widest text-blue-200 sm:text-2xl">
