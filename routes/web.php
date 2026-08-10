@@ -40,3 +40,4 @@ Route::get('/applicants/{applicant}/id-document', [IdDocumentController::class, 
     ->middleware('auth');
 
 require __DIR__ . '/settings.php';
+require __DIR__ . '/admin.php';

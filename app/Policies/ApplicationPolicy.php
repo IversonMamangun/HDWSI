@@ -66,4 +66,19 @@ class ApplicationPolicy
         return $viewer->hasRole(RoleEnum::GUARDIAN->value)
             && $viewer->linkedApplicants()->where('applicant_id', $applicant->id)->exists();
     }
+
+    public function viewApplicantList(User $viewer): bool
+    {
+        return $viewer->hasPermissionTo(PermissionEnum::ADMISSION_VIEW->value);
+    }
+
+    public function approveApplicant(User $viewer, User $applicant): bool
+    {
+        return $viewer->hasPermissionTo(PermissionEnum::ADMISSION_MANAGE_APPLICATIONS->value);
+    }
+
+    public function rejectApplicant(User $viewer, User $applicant): bool
+    {
+        return $this->approveApplicant($viewer, $applicant);
+    }
 }
