@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Guardian;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -13,14 +14,10 @@ class GuardianConsentController extends Controller
 {
     public function show(User $applicant): Response
     {
-        return Inertia::render('Guardian/Consent', [
-            'applicant' => [
-                'id' => $applicant->id,
-                'name' => $applicant->name,
-                'email' => $applicant->email,
-                'phone_number' => $applicant->phone_number,
-                'date_of_birth' => $applicant->date_of_birth?->format('Y-m-d'),
-            ],
+        Gate::authorize('viewChildApplication', [User::class, $applicant]);
+
+        return Inertia::render('guardian/Consent', [
+            'applicant' => new UserResource($applicant),
         ]);
     }
 
@@ -33,7 +30,16 @@ class GuardianConsentController extends Controller
         ]);
 
         return redirect()
-            ->route('dashboard')
+            ->route('guardian.dashboard')
             ->with('status', 'Consent recorded — the applicant can now submit their application.');
+    }
+
+    public function dashboard(Request $request): Response
+    {
+        $applicants = $request->user()->linkedApplicants;
+
+        return Inertia::render('guardian/Dashboard', [
+            'applicants' => UserResource::collection($applicants),
+        ]);
     }
 }
