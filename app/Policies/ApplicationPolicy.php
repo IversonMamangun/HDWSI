@@ -49,4 +49,21 @@ class ApplicationPolicy
             && $guardian->hasPermissionTo(PermissionEnum::GUARDIAN_CONSENT->value)
             && $guardian->linkedApplicants()->where('applicant_id', $applicant->id)->exists();
     }
+
+    public function viewIdDocument(User $viewer, User $applicant): bool
+    {
+        // The applicant can view their own document
+        if ($viewer->id === $applicant->id) {
+            return true;
+        }
+
+        // An admissions officer with the right permission can view any applicant's
+        if ($viewer->hasPermissionTo(PermissionEnum::ADMISSION_VIEW->value)) {
+            return true;
+        }
+
+        // A linked guardian can view their own child's document
+        return $viewer->hasRole(RoleEnum::GUARDIAN->value)
+            && $viewer->linkedApplicants()->where('applicant_id', $applicant->id)->exists();
+    }
 }
