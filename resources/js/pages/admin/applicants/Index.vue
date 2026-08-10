@@ -2,13 +2,13 @@
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-import AppLayout from '@/layouts/AppLayout.vue';
-import type { BreadcrumbItem, Paginated, User } from '@/types'
 
 import ApplicantTable from '@/components/admin/applicants/ApplicantTable.vue';
 import ApplicantTableToolbar from '@/components/admin/applicants/ApplicantTableToolbar.vue';
 import TablePagination from '@/components/admin/shared/TablePagination.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
 import { index as adminApplicants } from '@/routes/admin/applicants';
+import type { BreadcrumbItem, Paginated, User } from '@/types'
 
 const selectedApplicant = ref<User | null>(null);
 const deleteDialogOpen = ref(false);
