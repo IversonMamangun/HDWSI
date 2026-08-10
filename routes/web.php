@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegistrationValidationController;
-use App\Http\Controllers\GuardianConsentController;
+use App\Http\Controllers\Guardian\GuardianConsentController;
 use App\Http\Controllers\IdDocumentController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
