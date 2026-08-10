@@ -4,6 +4,7 @@ import { ref, onMounted, computed } from 'vue';
 import { login } from '@/routes';
 
 const isMenuOpen = ref(false);
+// Set default to false
 const isDarkMode = ref(false);
 
 const page = usePage();
@@ -24,13 +25,10 @@ const navLinks = [
 ];
 
 onMounted(() => {
-  if (
-    document.documentElement.classList.contains('dark') ||
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-  ) {
-    isDarkMode.value = true;
-    document.documentElement.classList.add('dark');
-  }
+  // Force light mode as the absolute default.
+  // We removed the window.matchMedia check that forced dark mode based on OS settings.
+  isDarkMode.value = false;
+  document.documentElement.classList.remove('dark');
 });
 
 const toggleMenu = () => {
