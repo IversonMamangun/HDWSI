@@ -4,8 +4,7 @@ import { Search } from '@lucide/vue';
 import { ref, watch } from 'vue';
 
 import { Input } from '@/components/ui/input';
-
-import {  index } from '@/routes/admin/applicants';
+import { index } from '@/routes/admin/applicants';
 
 interface Props {
     filters: {
@@ -13,10 +12,7 @@ interface Props {
     };
 }
 
-// const { can } = usePermissions();
-
 const props = defineProps<Props>();
-
 const search = ref(props.filters.search ?? '');
 
 let timeout: ReturnType<typeof setTimeout>;
@@ -47,16 +43,11 @@ watch(search, (value) => {
             <Search
                 class="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
             />
-
             <Input
                 v-model="search"
-                placeholder="Search customers..."
+                placeholder="Search applicants..."
                 class="pl-9"
             />
         </div>
-
-        <!-- <Button v-if="can('applicants.create')" as-child>
-            <Link :href="create()"> Add Applicant </Link>
-        </Button> -->
     </div>
 </template>

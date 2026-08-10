@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
 
 class RejectApplicantController extends Controller
 {
@@ -32,6 +33,11 @@ class RejectApplicantController extends Controller
             'rejection_reason' => $validated['reason'],
         ]);
 
-        return back()->with('status', 'Applicant rejected.');
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Applicant rejected.',
+        ]);
+
+        return back();
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
 
 class ApproveApplicantController extends Controller
 {
@@ -36,6 +37,11 @@ class ApproveApplicantController extends Controller
             'approved_by' => $request->user()->id,
         ]);
 
-        return back()->with('status', 'Applicant approved and promoted to member.');
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Applicant approved and promoted to member.',
+        ]);
+
+        return back();
     }
 }

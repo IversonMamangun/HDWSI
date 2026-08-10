@@ -20,22 +20,14 @@ class ApplicantController extends Controller
     {
         Gate::authorize('viewApplicantList', User::class);
 
-        $allowedSorts = [
-            'first_name',
-            'last_name',
-            'email',
-            'created_at',
-        ];
+        $allowedSorts = ['first_name', 'last_name', 'email', 'created_at'];
 
         $sort = $request->string('sort')->value();
-
         if (!in_array($sort, $allowedSorts, true)) {
             $sort = 'created_at';
         }
 
-        $direction = $request->string('direction')->value() === 'asc'
-            ? 'asc'
-            : 'desc';
+        $direction = $request->string('direction')->value() === 'asc' ? 'asc' : 'desc';
 
         $applicants = User::query()
             ->role(RoleEnum::APPLICANT->value)
@@ -59,11 +51,9 @@ class ApplicantController extends Controller
 
         return Inertia::render('admin/applicants/Index', [
             'applicants' => UserResource::collection($applicants),
-
             'filters' => [
                 'search' => $request->string('search')->value(),
             ],
-
             'sort' => $sort,
             'direction' => $direction,
         ]);
@@ -92,8 +82,8 @@ class ApplicantController extends Controller
     {
         Gate::authorize('viewIdDocument', $applicant);
 
-        return Inertia::render('Admin/Applicants/Show', [
-            'applicant' => $applicant->load('media', 'guardians'),
+        return Inertia::render('admin/applicants/Show', [
+            'applicant' => new UserResource($applicant->load('guardians')),
         ]);
     }
 

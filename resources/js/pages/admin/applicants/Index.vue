@@ -2,13 +2,13 @@
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-
 import ApplicantTable from '@/components/admin/applicants/ApplicantTable.vue';
 import ApplicantTableToolbar from '@/components/admin/applicants/ApplicantTableToolbar.vue';
 import TablePagination from '@/components/admin/shared/TablePagination.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
 import { index as adminApplicants } from '@/routes/admin/applicants';
-import type { BreadcrumbItem, Paginated, User } from '@/types'
+import type { BreadcrumbItem, Paginated, User } from '@/types';
 
 const selectedApplicant = ref<User | null>(null);
 const deleteDialogOpen = ref(false);
@@ -17,24 +17,19 @@ function onDelete(applicant: User) {
     selectedApplicant.value = applicant;
     deleteDialogOpen.value = true;
 }
+import type { BreadcrumbItem, Paginated, User } from '@/types';
 
 defineProps<{
     applicants: Paginated<User>;
-
     filters: {
         search: string | null;
     };
-
     sort: string;
-
     direction: 'asc' | 'desc';
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Applicants',
-        href: adminApplicants(),
-    },
+    { title: 'Applicants', href: adminApplicants() },
 ];
 </script>
 
@@ -42,23 +37,17 @@ const breadcrumbs: BreadcrumbItem[] = [
     <Head title="Applicants" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-    <div class="flex flex-1 flex-col gap-4 p-4">
-        <ApplicantTableToolbar :filters="filters" />
+        <div class="flex flex-1 flex-col gap-4 p-4">
+            <ApplicantTableToolbar :filters="filters" />
 
-        <ApplicantTable
-            :applicants="applicants"
-            :filters="filters"
-            :sort="sort"
-            :direction="direction"
-            @delete="onDelete"
-        />
+            <ApplicantTable
+                :applicants="applicants"
+                :filters="filters"
+                :sort="sort"
+                :direction="direction"
+            />
 
-        <TablePagination :items="applicants" item-label="applicants" />
-
-        <!-- <ApplicantDeleteDialog
-            v-model:open="deleteDialogOpen"
-            :applicant="selectedApplicant"
-        /> -->
-    </div>
+            <TablePagination :items="applicants" item-label="applicants" />
+        </div>
     </AppLayout>
 </template>

@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Gate;
 
 class UserResource extends JsonResource
 {
@@ -45,10 +46,19 @@ class UserResource extends JsonResource
             'phone_number_verified_at' => $this->phone_number_verified_at?->toDateTimeString(),
 
             'date_of_birth' => $this->date_of_birth?->toDateString(),
+            'is_minor' => $this->is_minor,
             'address' => $this->address,
 
             'id_type' => $this->id_type,
-            'id_number' => $this->id_number,
+            'id_number' => $this->when(
+                Gate::allows('viewIdDocument', $this->resource),
+                $this->id_number,
+            ),
+
+            'approved_at' => $this->approved_at?->format('M j, Y'),
+            'rejected_at' => $this->rejected_at?->format('M j, Y'),
+            'rejection_reason' => $this->rejection_reason,
+            'guardians' => GuardianResource::collection($this->whenLoaded('guardians')),
 
             'roles' => $this->roles
                 ->pluck('name')
@@ -61,9 +71,9 @@ class UserResource extends JsonResource
             'updated_at' => $this->updated_at?->format('M d, Y'),
 
             'can' => [
-                'view' => $request->user()?->can('view', $this->resource),
-                'update' => $request->user()?->can('update', $this->resource),
-                'delete' => $request->user()?->can('delete', $this->resource),
+                'view' => Gate::allows('viewIdDocument', $this->resource),
+                'approve' => Gate::allows('approveApplicant', $this->resource),
+                'reject' => Gate::allows('rejectApplicant', $this->resource),
             ],
         ];
     }

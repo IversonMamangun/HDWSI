@@ -2,9 +2,6 @@
 import { Link } from '@inertiajs/vue3';
 import { ArrowDown, ArrowUp, ChevronsUpDown } from '@lucide/vue';
 
-import type { Paginated, User } from '@/types';
-import ApplicantsTableRowActions from './ApplicantTableRowActions.vue';
-
 import {
     Table,
     TableBody,
@@ -13,23 +10,18 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-
-import { index } from '@/routes/admin/applicants/index';
+import { index } from '@/routes/admin/applicants';
+import type { Paginated, User } from '@/types';
+import ApplicantTableRowActions from './ApplicantTableRowActions.vue';
 
 const props = defineProps<{
     applicants: Paginated<User>;
-
     filters: {
         search: string | null;
     };
-
     sort: string;
     direction: 'asc' | 'desc';
 }>();
-
-// const emit = defineEmits<{
-//     delete: [applicant: User];
-// }>();
 
 interface SortableColumn {
     label: string;
@@ -76,7 +68,6 @@ function sortHref(field: string) {
                                 "
                                 class="size-3.5"
                             />
-
                             <ArrowDown
                                 v-else-if="
                                     sort === column.field &&
@@ -84,7 +75,6 @@ function sortHref(field: string) {
                                 "
                                 class="size-3.5"
                             />
-
                             <ChevronsUpDown
                                 v-else
                                 class="size-3.5 text-muted-foreground/50"
@@ -93,31 +83,30 @@ function sortHref(field: string) {
                     </TableHead>
 
                     <TableHead>Mobile</TableHead>
-
+                    <TableHead>Status</TableHead>
                     <TableHead class="w-15" />
                 </TableRow>
             </TableHeader>
 
             <TableBody>
-                <TableRow v-for="applicant in applicants.data" :key="applicant.id">
+                <TableRow
+                    v-for="applicant in applicants.data"
+                    :key="applicant.id"
+                >
                     <TableCell>
                         <div class="flex flex-col">
-                            <span class="font-medium">
-                                {{ applicant.full_name }}
-                            </span>
-
-                            <span class="text-xs text-muted-foreground">
-                                #{{ applicant.id }}
-                            </span>
+                            <span class="font-medium">{{
+                                applicant.full_name
+                            }}</span>
+                            <span class="text-xs text-muted-foreground"
+                                >#{{ applicant.id }}</span
+                            >
                         </div>
                     </TableCell>
 
                     <TableCell>
                         <div class="flex flex-col">
-                            <span>
-                                {{ applicant.email }}
-                            </span>
-
+                            <span>{{ applicant.email }}</span>
                             <span
                                 v-if="!applicant.email_verified"
                                 class="text-xs text-amber-600"
@@ -127,24 +116,35 @@ function sortHref(field: string) {
                         </div>
                     </TableCell>
 
-                    <TableCell>
-                        {{ applicant.created_at }}
-                    </TableCell>
+                    <TableCell>{{ applicant.created_at }}</TableCell>
+                    <TableCell>{{ applicant.phone_number ?? '—' }}</TableCell>
 
                     <TableCell>
-                        {{ applicant.phone_number ?? '—' }}
+                        <span
+                            v-if="applicant.approved_at"
+                            class="text-xs font-medium text-emerald-600"
+                        >
+                            Approved
+                        </span>
+                        <span
+                            v-else-if="applicant.rejected_at"
+                            class="text-xs font-medium text-destructive"
+                        >
+                            Rejected
+                        </span>
+                        <span v-else class="text-xs text-muted-foreground">
+                            Pending
+                        </span>
                     </TableCell>
 
                     <TableCell class="text-right">
-                        <ApplicantsTableRowActions
-                            :applicant="applicant"
-                        />
+                        <ApplicantTableRowActions :applicant="applicant" />
                     </TableCell>
                 </TableRow>
 
                 <TableRow v-if="applicants.data.length === 0">
                     <TableCell
-                        :colspan="5"
+                        :colspan="6"
                         class="h-32 text-center text-muted-foreground"
                     >
                         No applicants found.

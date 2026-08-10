@@ -3,8 +3,9 @@
 use App\Http\Controllers\Admin\Applicants\ApplicantController;
 use App\Http\Controllers\Admin\Applicants\ApproveApplicantController;
 use App\Http\Controllers\Admin\Applicants\RejectApplicantController;
+use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'role:admin|admissions_officer'])
+Route::middleware(['auth', 'role:admin|admissions-officer'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
