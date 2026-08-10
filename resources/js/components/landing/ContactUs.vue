@@ -14,7 +14,7 @@ const submitForm = () => {
 </script>
 
 <template>
-  <section class="relative w-full text-white overflow-hidden">
+  <section id="contact" class="relative w-full text-white overflow-hidden">
     <img 
       src="/assets/front-page/BACKGROUND/Contact  Us.jpg" 
       alt="Contact Us Background" 
