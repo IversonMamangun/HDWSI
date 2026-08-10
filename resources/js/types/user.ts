@@ -1,3 +1,5 @@
+import type { Guardian } from './guardian';
+
 export type User = {
     id: number;
 
@@ -18,10 +20,15 @@ export type User = {
     phone_number_verified_at: string | null;
 
     date_of_birth: string | null;
+    is_minor: boolean;
     address: string | null;
 
     id_type: string | null;
     id_number: string | null;
+
+    approved_at: string | null;
+    rejected_at: string | null;
+    rejection_reason: string | null;
 
     roles: string[];
     primary_role: string | null;
@@ -29,9 +36,10 @@ export type User = {
     created_at: string;
     updated_at: string;
 
-    can: {
-        view: boolean;
-        update: boolean;
-        delete: boolean;
+    guardians?: Guardian[];
+    can?: {
+        view?: boolean;
+        approve?: boolean;
+        reject?: boolean;
     };
 };
