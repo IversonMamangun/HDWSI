@@ -43,6 +43,11 @@ class CreateNewUser implements CreatesNewUsers
 
             $user->assignRole(RoleEnum::APPLICANT->value);
 
+            if (!empty($input['id_document'])) {
+                $user->addMedia($input['id_document'])
+                    ->toMediaCollection('government_id');
+            }
+
             if (User::isMinorForDateOfBirth($input['date_of_birth'])) {
                 $guardian = User::firstOrCreate(
                     ['email' => $input['guardian_email']],

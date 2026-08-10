@@ -7,11 +7,20 @@ import {
     today,
 } from '@internationalized/date';
 import type { CalendarDate } from '@internationalized/date';
-import { CalendarIcon } from '@lucide/vue';
+import { CalendarIcon, FileTextIcon, XIcon, UploadIcon } from '@lucide/vue';
 import { computed, ref, watch } from 'vue';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
+import {
+    Attachment,
+    AttachmentAction,
+    AttachmentActions,
+    AttachmentContent,
+    AttachmentDescription,
+    AttachmentMedia,
+    AttachmentTitle,
+} from '@/components/ui/attachment';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
@@ -95,6 +104,7 @@ const form = useForm({
     address: '',
     id_type: '',
     id_number: '',
+    id_document: null as File | null,
     guardian_email: '',
     guardian_first_name: '',
     guardian_last_name: '',
@@ -228,6 +238,37 @@ function submit() {
         },
     });
 }
+
+const idDocumentInput = ref<HTMLInputElement | null>(null);
+
+function selectIdDocument() {
+    idDocumentInput.value?.click();
+}
+
+function onIdDocumentChange(e: Event) {
+    const file = (e.target as HTMLInputElement).files?.[0] ?? null;
+    form.id_document = file;
+    if (file) {
+        form.validate('id_document');
+    }
+}
+
+function removeIdDocument() {
+    form.id_document = null;
+    if (idDocumentInput.value) idDocumentInput.value.value = '';
+}
+
+function formatFileSize(bytes: number): string {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+const idDocumentMeta = computed(() => {
+    if (!form.id_document) return '';
+    const ext = form.id_document.name.split('.').pop()?.toUpperCase() ?? '';
+    return `${ext} · ${formatFileSize(form.id_document.size)}`;
+});
 </script>
 
 <template>
@@ -518,6 +559,68 @@ function submit() {
                             :message="form.errors.id_number"
                         />
                     </div>
+
+<div class="grid gap-2">
+    <Label for="id_document"
+        >Upload a photo or scan of your ID
+        <span v-if="isMinor" class="font-normal text-muted-foreground"
+            >(optional)</span
+        ></Label
+    >
+
+    <input
+        id="id_document"
+        ref="idDocumentInput"
+        type="file"
+        accept="image/jpeg,image/png,application/pdf"
+        class="hidden"
+        @change="onIdDocumentChange"
+    />
+
+    <button
+        v-if="!form.id_document"
+        type="button"
+        class="flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-6 text-sm text-muted-foreground hover:bg-muted/40"
+        :aria-invalid="form.invalid('id_document')"
+        @click="selectIdDocument"
+    >
+        <UploadIcon class="h-5 w-5" />
+        Click to select a file (JPG, PNG, or PDF, max 5MB)
+    </button>
+
+    <Attachment
+        v-else
+        :state="form.progress ? 'uploading' : 'idle'"
+        class="w-full"
+    >
+        <AttachmentMedia>
+            <FileTextIcon />
+        </AttachmentMedia>
+        <AttachmentContent>
+            <AttachmentTitle>{{ form.id_document.name }}</AttachmentTitle>
+            <AttachmentDescription>
+                {{
+                    form.progress
+                        ? `Uploading · ${form.progress.percentage}%`
+                        : idDocumentMeta
+                }}
+            </AttachmentDescription>
+        </AttachmentContent>
+        <AttachmentActions>
+            <AttachmentAction
+                aria-label="Remove selected ID document"
+                @click="removeIdDocument"
+            >
+                <XIcon />
+            </AttachmentAction>
+        </AttachmentActions>
+    </Attachment>
+
+    <InputError
+        v-if="form.invalid('id_document')"
+        :message="form.errors.id_document"
+    />
+</div>
                 </div>
 
                 <!-- Step: Guardian details (minors only) -->

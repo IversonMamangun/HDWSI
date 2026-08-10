@@ -27,6 +27,7 @@ trait ProfileValidationRules
             'address' => $this->addressRules(),
             'id_type' => $this->idTypeRules(),
             'id_number' => $this->idNumberRules(),
+            'id_document' => $this->idDocumentRules(),
             'guardian_email' => $this->guardianEmailRules(),
             'guardian_first_name' => $this->guardianFirstNameRules(),
             'guardian_last_name' => $this->guardianLastNameRules(),
@@ -150,6 +151,21 @@ trait ProfileValidationRules
     protected function idNumberRules(): array
     {
         return ['required_with:id_type', 'nullable', 'string', 'max:50'];
+    }
+
+    /**
+     * Get the validation rules used to validate government ID document.
+     *
+     * @return array<int, ValidationRule|array<mixed>|string>
+     */
+    protected function idDocumentRules(): array
+    {
+        return [
+            'nullable',
+            'file',
+            'mimes:jpg,jpeg,png,pdf',
+            'max:5120',
+        ];
     }
 
     /**
