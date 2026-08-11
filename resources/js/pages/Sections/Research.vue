@@ -210,9 +210,9 @@ onUnmounted(() => {
       <div 
         v-for="item in items" 
         :key="item.id"
-        class="aspect-[4/3] sm:aspect-[3/2] flex flex-col items-start justify-start rounded-xl border border-blue-300/50 bg-gradient-to-br from-[#2095E0] to-[#104C7D] p-6 shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+        class="aspect-[4/3] sm:aspect-[2/1] flex flex-col items-start justify-start rounded-xl border border-blue-300/50 bg-gradient-to-br from-[#2095E0] to-[#104C7D] p-6 shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
       >
-        <div class="mb-4 md:mb-5 flex-shrink-0 bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+        <div class="mb-2 md:mb-5 flex-shrink-0 bg-white/10 p-3 rounded-lg backdrop-blur-sm">
           <img 
             :src="item.icon" 
             :alt="item.title + ' Icon'" 
@@ -225,11 +225,11 @@ onUnmounted(() => {
       </div>
     </div>
   </section>
-
+  
   <section class="bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
     <div class="relative w-full max-w-7xl mx-auto overflow-hidden bg-white rounded-xl shadow-lg border border-gray-200">
         <img 
-          src="/assets/Research center assets/Innovation Laboratory.jpg" 
+          src="/assets/Research center assets/Careers.png" 
           alt="Careers Background" 
           class="w-full object-cover"
         />
