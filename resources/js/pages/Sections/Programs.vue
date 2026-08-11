@@ -28,16 +28,16 @@ const wellnessPrograms = ref<Program[]>([
   { title: 'Digital Addiction Prevention', image: '/assets/Programs assets/Digital Addiction.jpg' },
 ])
 
-// const labs = [
-//   'AI Fundamentals',
-//   'Machine Learning',
-//   'Generative AI',
-//   'Robotics',
-//   'Autonomous Systems',
-//   'AI Applications',
-//   'Prompt Engineering',
-//   'AI Ethics',
-// ];
+const labs = [
+  'AI Fundamentals',
+  'Machine Learning',
+  'Generative AI',
+  'Robotics',
+  'Autonomous Systems',
+  'AI Applications',
+  'Prompt Engineering',
+  'AI Ethics',
+];
 
 
 // Explicitly type the array
@@ -105,7 +105,7 @@ const programs = ref<Program[]>([
 // ];
 
 const showAll = ref(false);
-// const showAllLabs = ref(false);
+const showAllLabs = ref(false);
 // const showAllSocialIntelligence = ref(false);
 
 const toggleView = () => {
@@ -163,7 +163,39 @@ const plugin = Autoplay({
     </div>
   </section>
 
+<section class="py-12 px-4 sm:px-6 lg:px-8 w-full">
+  <div class="max-w-7xl mx-auto flex flex-col items-center w-full">
+    
+    <div class="mb-10 text-center flex flex-col items-center w-full">
+      <h1 class="text-[#289F7F] text-3xl md:text-4xl lg:text-5xl font-black mb-3 leading-tight drop-shadow-sm">
+        School of Artificial Intelligence
+      </h1>
+      <h2 class="text-[#2095E0] text-xl md:text-2xl lg:text-3xl font-extrabold mb-6">
+        Human-Centered AI Education
+      </h2>
+      <h3 class="text-[#2095E0] text-lg md:text-xl font-bold uppercase tracking-wider">
+        Programs:
+      </h3>
+      
+    </div>
 
+    <div class="w-full py-4">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
+        <li
+          v-for="(lab, index) in (showAllLabs ? labs : labs.slice(0, 8))"
+          :key="index"
+          class="rounded-xl bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-md transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg h-full"
+        >
+          <div class="h-full min-h-[4rem] rounded-xl p-4 sm:p-5 text-white font-semibold text-sm sm:text-base bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+            <span class="w-3 h-3 bg-white rounded-full mr-3 sm:mr-4 flex-shrink-0 shadow-sm"></span>
+            <span class="leading-snug">{{ lab }}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+  </div>
+</section>
 
 
 
