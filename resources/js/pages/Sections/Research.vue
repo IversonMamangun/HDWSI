@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import Footer from '@/components/landing/Footer.vue';
 import NavBar from '@/components/landing/NavBar.vue';
 
@@ -14,6 +14,7 @@ const researches = [
   { title: 'Social Intelligence', image: '/assets/Research center assets/Social.jpg' },
   { title: 'Sustainable Innovation', image: '/assets/Research center assets/Sustainable.jpg' },
 ];
+
 const labs = [
   'AI Laboratory',
   'Robotics Laboratory',
@@ -26,46 +27,15 @@ const labs = [
   'Future Economy Innovation Hub',
 ];
 
-
-
 const items = ref([
-  {
-    id: 1,
-    title: 'Universities',
-    icon: '/assets/Research center assets/Universities.png',
-  },
-  {
-    id: 2,
-    title: 'Governments',
-    icon: '/assets/Research center assets/Governments.png',
-  },
-  {
-    id: 3,
-    title: 'Technology Companies',
-    icon: '/assets/Research center assets/Technology.png',
-  },
-  {
-    id: 4,
-    title: 'Healthcare Institutions',
-    icon: '/assets/Research center assets/Healthcare.png',
-  },
-  {
-    id: 5,
-    title: 'NGOs',
-    icon: '/assets/Research center assets/NGOs.png',
-  },
-  {
-    id: 6,
-    title: 'International Organizations',
-    icon: '/assets/Research center assets/International.png',
-  },
-  {
-    id: 7,
-    title: 'Research Institutes',
-    icon: '/assets/Research center assets/Research Institutes.png',
-  }
-])
-
+  { id: 1, title: 'Universities', icon: '/assets/Research center assets/Universities.png' },
+  { id: 2, title: 'Governments', icon: '/assets/Research center assets/Governments.png' },
+  { id: 3, title: 'Technology Companies', icon: '/assets/Research center assets/Technology.png' },
+  { id: 4, title: 'Healthcare Institutions', icon: '/assets/Research center assets/Healthcare.png' },
+  { id: 5, title: 'NGOs', icon: '/assets/Research center assets/NGOs.png' },
+  { id: 6, title: 'International Organizations', icon: '/assets/Research center assets/International.png' },
+  { id: 7, title: 'Research Institutes', icon: '/assets/Research center assets/Research Institutes.png' }
+]);
 
 const careers = [
   { title: 'AI Specialist', ext: 'png' },
@@ -81,12 +51,9 @@ const careers = [
   { title: 'Digital Transformation Consultant', ext: 'png' },
 ];
 
-const showAll = ref(false)
-
-
-const visibleItems = computed(() => {
-  return showAll.value ? items.value : items.value.slice(0, 8)
-})
+// Separated the state so opening one section doesn't open the other
+const showAllLabs = ref(false);
+const showAllCareers = ref(false);
 
 const currentIndex = ref(0);
 let autoScrollInterval: ReturnType<typeof setInterval> | null = null;
@@ -104,15 +71,15 @@ const getCardClass = (index: number) => {
     case 0:
       return 'z-30 scale-110 translate-x-0 opacity-100 shadow-2xl';
     case 1:
-      return 'z-20 scale-90 translate-x-[90%] sm:translate-x-[110%] opacity-90 cursor-pointer shadow-xl';
+      return 'z-20 scale-90 translate-x-[85%] sm:translate-x-[110%] opacity-90 cursor-pointer shadow-xl';
     case -1:
-      return 'z-20 scale-90 -translate-x-[90%] sm:-translate-x-[110%] opacity-90 cursor-pointer shadow-xl';
+      return 'z-20 scale-90 -translate-x-[85%] sm:-translate-x-[110%] opacity-90 cursor-pointer shadow-xl';
     case 2:
-      return 'z-10 scale-75 translate-x-[170%] sm:translate-x-[210%] opacity-60 cursor-pointer shadow-lg';
+      return 'z-10 scale-75 translate-x-[150%] sm:translate-x-[210%] opacity-60 cursor-pointer shadow-lg hidden sm:flex'; // Hidden on very small screens to avoid excessive overflow
     case -2:
-      return 'z-10 scale-75 -translate-x-[170%] sm:-translate-x-[210%] opacity-60 cursor-pointer shadow-lg';
+      return 'z-10 scale-75 -translate-x-[150%] sm:-translate-x-[210%] opacity-60 cursor-pointer shadow-lg hidden sm:flex';
     default:
-      return 'z-0 scale-50 opacity-0 pointer-events-none';
+      return 'z-0 scale-50 opacity-0 pointer-events-none hidden';
   }
 };
 
@@ -136,7 +103,8 @@ onUnmounted(() => {
 <template>
   <Head title="Research" />
 
-  <div class="relative  flex flex-col">
+  <!-- Added overflow-x-clip to prevent horizontal scrolling on mobile from carousel -->
+  <div class="relative flex flex-col overflow-x-clip">
     <div 
       class="absolute inset-0 w-full bg-cover bg-center bg-no-repeat"
       style="background-image: url('/assets/Research center assets/research bg.jpg');"
@@ -144,32 +112,33 @@ onUnmounted(() => {
 
     <NavBar class="relative z-10" />
 
-    <main class="pt-32 flex-grow w-full max-w-7xl mx-auto px-4 flex flex-col items-center relative z-10">
-      <div class="text-center text-white mb-6">
+    <main class="pt-24 pb-12 sm:pt-32 flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center relative z-10">
+      <div class="text-center text-white mb-8 sm:mb-12">
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-4 drop-shadow-lg">
           Research Center
         </h1>
-        <h3 class="text-xl md:text-2xl font-semibold text-blue-100 drop-shadow-md">
+        <h3 class="text-lg sm:text-xl md:text-2xl font-semibold text-blue-100 drop-shadow-md max-w-3xl mx-auto">
           The HDWSI Research Institute supports research in:
         </h3>
       </div>
       
-      <div class="relative w-full h-[200px] sm:h-[480px] flex items-center justify-center">
+      <div class="relative w-full h-[220px] sm:h-[400px] md:h-[480px] flex items-center justify-center">
         <div 
           v-for="(item, index) in researches" 
           :key="index"
           @click="setIndex(index)"
           :class="[
             'absolute transition-all duration-700 ease-in-out flex flex-col bg-white rounded-xl p-3',
-            'w-48 sm:w-56 lg:w-64 aspect-[2/3]',
+            'w-44 sm:w-56 lg:w-64 aspect-[2/3]',
             getCardClass(index)
           ]"
         >
-          <div class="w-full aspect-square rounded-xl overflow-hidden mb-3 flex-shrink-0">
+          <div class="w-full aspect-square rounded-xl overflow-hidden mb-3 flex-shrink-0 bg-gray-100">
             <img 
               :src="item.image" 
               :alt="item.title" 
               class="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
           <h4 class="flex-grow flex items-start justify-center text-center font-bold text-[#2095E0] text-sm sm:text-base lg:text-lg leading-tight mb-2">
@@ -178,12 +147,10 @@ onUnmounted(() => {
         </div>
       </div>
     </main>
-    
-    
   </div>
   
-    <section class="bg-white py-5">
-      <div class="relative w-full max-w-7xl mx-auto overflow-hidden bg-white rounded-xl shadow-lg border border-gray-200">
+  <section class="bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
+   <div class="relative w-full max-w-7xl mx-auto overflow-hidden bg-white rounded-xl shadow-lg border border-gray-200">
         <img 
           src="/assets/Research center assets/Innovation Laboratory.jpg" 
           alt="Learning Pathways" 
@@ -199,73 +166,68 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <div class="max-w-7xl mx-auto py-6">
-
-        <ul class="grid grid-cols-1 sm:grid-cols-4 gap-3">
-          <li
-            v-for="(lab, index) in (showAll ? labs : labs.slice(0, 8))"
-            :key="index"
-            class="rounded-xl bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-md"
-          >
-            <div
-              class="h-full rounded-xl p-3 sm:p-4 text-white font-semibold text-sm sm:text-base bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center"
-            >
-              <span class="w-3 h-3 bg-white rounded-full mr-3 flex-shrink-0"></span>
-              {{ lab }}
-            </div>
-          </li>
-        </ul>
-
-        <div class="flex justify-center mt-4">
-          <button
-            @click="showAll = !showAll"
-            class="px-8 py-3 rounded-md bg-[#2095E0] text-white text-lg font-bold hover:bg-[#1A75BA] transition"
-          >
-            {{ showAll ? 'See Less' : 'See More' }}
-          </button>
-        </div>
-    </div>
-
-
-    </section>
-
-    <section>
-    <div class="py-7" style="background-image: url('/assets/Research center assets/research bg.jpg');" >
-      
-      <div class="flex flex-col items-center text-center text-white pt-12 mb-14">
-        <h2 class="text-3xl md:text-5xl font-black uppercase tracking-wide">
-          Global Partnerships
-        </h2>
-        <p class="mt-3 text-lg md:text-xl font-medium text-gray-200">
-          Collaborate with:
-        </p>
-      </div>
-
-      <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        
-        <div 
-          v-for="item in visibleItems" 
-          :key="item.id"
-          class="aspect-[3/2] flex flex-col items-start justify-start rounded-xl border-2 border-gray-300 bg-gradient-to-r from-[#2095E0] to-[#104C7D] p-6 sm:p-8 shadow-lg transition-transform duration-300 hover:-translate-y-1"
+    <div class="max-w-7xl mx-auto py-8">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <li
+          v-for="(lab, index) in (showAllLabs ? labs : labs.slice(0, 8))"
+          :key="index"
+          class="rounded-xl bg-gradient-to-r from-blue-300 to-[#104C7D] shadow-md h-full"
         >
-          <div class="mb-5 flex-shrink-0">
-            <img 
-              :src="item.icon" 
-              :alt="item.title + ' Icon'" 
-              class="h-14 w-14 object-contain sm:h-16 sm:w-16"
-            />
+          <div class="h-full min-h-[3.5rem] rounded-xl p-4 text-white font-semibold text-sm sm:text-base bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+            <span class="w-3 h-3 bg-white rounded-full mr-3 flex-shrink-0"></span>
+            <span class="leading-tight">{{ lab }}</span>
           </div>
-          
-          <h3 class="text-xl sm:text-2xl font-bold leading-tight text-white mt-auto pb-4">
-            {{ item.title }}
-          </h3>
-        </div>
+        </li>
+      </ul>
 
+      <div class="flex justify-center mt-8">
+        <button
+          type="button"
+          @click="showAllLabs = !showAllLabs"
+          class="px-8 py-3 rounded-md bg-[#2095E0] text-white text-base md:text-lg font-bold hover:bg-[#1A75BA] active:scale-95 transition-all shadow-md"
+        >
+          {{ showAllLabs ? 'See Less' : 'See More' }}
+        </button>
       </div>
     </div>
-    </section>
-    <section class="bg-white py-5">
-      <div class="relative w-full max-w-7xl mx-auto overflow-hidden bg-white rounded-xl shadow-lg border border-gray-200">
+  </section>
+
+  <section 
+    class="py-14 px-4 sm:px-6 lg:px-8 bg-cover bg-center bg-no-repeat relative"
+    style="background-image: url('/assets/Research center assets/research bg.jpg');"
+  >
+    <div class="absolute inset-0"></div> <!-- Ensures contrast over bg image -->
+    <div class="relative z-10 flex flex-col items-center text-center text-white mb-10 md:mb-14">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-wide drop-shadow-md">
+        Global Partnerships
+      </h2>
+      <p class="mt-3 text-lg md:text-xl font-medium text-gray-200 drop-shadow">
+        Collaborate with:
+      </p>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div 
+        v-for="item in items" 
+        :key="item.id"
+        class="aspect-[4/3] sm:aspect-[3/2] flex flex-col items-start justify-start rounded-xl border border-blue-300/50 bg-gradient-to-br from-[#2095E0] to-[#104C7D] p-6 shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+      >
+        <div class="mb-4 md:mb-5 flex-shrink-0 bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+          <img 
+            :src="item.icon" 
+            :alt="item.title + ' Icon'" 
+            class="h-12 w-12 sm:h-14 sm:w-14 object-contain filter brightness-0 invert"
+          />
+        </div>
+        <h3 class="text-lg sm:text-xl md:text-2xl font-bold leading-tight text-white mt-auto pb-2">
+          {{ item.title }}
+        </h3>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
+    <div class="relative w-full max-w-7xl mx-auto overflow-hidden bg-white rounded-xl shadow-lg border border-gray-200">
         <img 
           src="/assets/Research center assets/Innovation Laboratory.jpg" 
           alt="Careers Background" 
@@ -281,39 +243,42 @@ onUnmounted(() => {
         </div>
       </div>
 
-    <div class="max-w-7xl mx-auto py-6">
-      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="max-w-7xl mx-auto py-8">
+      <!-- Added extra padding to container so the negative margin on icons doesn't get clipped on mobile -->
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6 px-3 sm:px-4 md:px-0">
         <li
-        v-for="(career, index) in (showAll ? careers : careers.slice(0, 6))"
-        :key="index"
-        class="rounded-xl bg-[#2095E0] shadow-md flex items-center p-3 sm:p-4 relative"
-      >
-        <div class="absolute -left-3 top-1/2 transform -translate-y-1/2">
-    <img 
-      :src="`/assets/Research center assets/${career.title}.${career.ext}`" 
-      :alt="career.title" 
-      class="w-15 h-15 rounded-full border-2 border-blue-400 object-cover shadow-md"
-    />
-  </div>
+          v-for="(career, index) in (showAllCareers ? careers : careers.slice(0, 6))"
+          :key="index"
+          class="rounded-xl bg-[#2095E0] shadow-md flex items-center p-3 sm:p-4 relative min-h-[3.5rem] ml-4 md:ml-6 transition-transform hover:-translate-y-1"
+        >
+          <!-- Using standard Tailwind sizing (w-14/16) instead of non-existent w-15 -->
+          <div class="absolute -left-6 sm:-left-8 top-1/2 transform -translate-y-1/2 bg-white rounded-full shadow-lg p-0.5">
+            <img 
+              :src="`/assets/Research center assets/${career.title}.${career.ext}`" 
+              :alt="career.title" 
+              class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-blue-100 object-cover"
+              loading="lazy"
+            />
+          </div>
 
-  <span class="ml-12 text-white font-semibold text-sm sm:text-base">
-    {{ career.title }}
-  </span>
-</li>
-
+          <!-- Adjusted margin left to accommodate standardized icon size -->
+          <span class="ml-8 sm:ml-10 text-white font-semibold text-sm sm:text-base leading-tight">
+            {{ career.title }}
+          </span>
+        </li>
       </ul>
 
-      <div class="flex justify-center mt-6">
+      <div class="flex justify-center mt-10">
         <button
-          @click="showAll = !showAll"
-          class="px-6 py-2 rounded-md bg-[#2095E0] text-white text-sm sm:text-base font-bold hover:bg-[#1A75BA] transition"
+          type="button"
+          @click="showAllCareers = !showAllCareers"
+          class="px-8 py-3 rounded-md bg-[#2095E0] text-white text-base md:text-lg font-bold hover:bg-[#1A75BA] active:scale-95 transition-all shadow-md"
         >
-          {{ showAll ? 'See Less' : 'See More' }}
+          {{ showAllCareers ? 'See Less' : 'See More' }}
         </button>
       </div>
     </div>
   </section>
     
-      <Footer class="relative z-10" />
-
+  <Footer class="relative z-10" />
 </template>
