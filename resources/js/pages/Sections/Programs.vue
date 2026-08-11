@@ -8,6 +8,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  // CarouselNext,
+  // CarouselPrevious,
 } from '@/components/ui/carousel'
 
 // Define a type for clarity
@@ -26,6 +28,17 @@ const wellnessPrograms = ref<Program[]>([
   { title: 'Digital Addiction Prevention', image: '/assets/Programs assets/Digital Addiction.jpg' },
 ])
 
+// const labs = [
+//   'AI Fundamentals',
+//   'Machine Learning',
+//   'Generative AI',
+//   'Robotics',
+//   'Autonomous Systems',
+//   'AI Applications',
+//   'Prompt Engineering',
+//   'AI Ethics',
+// ];
+
 
 // Explicitly type the array
 const programs = ref<Program[]>([
@@ -37,7 +50,63 @@ const programs = ref<Program[]>([
   { title: 'Community Innovation', image: '/assets/Programs assets/Community Innovation.png' }
 ])
 
-const showAll = ref(false)
+
+// const plugin = Autoplay({
+//   delay: 3000,
+//   stopOnInteraction: true,
+// })
+
+// const humanity = ref([
+//   {
+//     id: 1,
+//     title: 'Behavioral Psychology',
+//     image: '/assets/Programs assets/Behavioral.jpg'
+//   },
+//   {
+//     id: 2,
+//     title: 'Neuroscience',
+//     image: '/assets/Programs assets/Neuroscience.jpg'
+//   },
+//   {
+//     id: 3,
+//     title: 'Sociology',
+//     image: '/assets/Programs assets/Sociology.jpg'
+//   },
+//   {
+//     id: 4,
+//     title: 'Anthropology',
+//     image: '/assets/Programs assets/Anthropology.jpg'
+//   },
+//   {
+//     id: 5,
+//     title: 'Organizational Behavior',
+//     image: '/assets/Programs assets/Organizational.jpg'
+//   },
+//   {
+//     id: 6,
+//     title: 'Consumer Psychology',
+//     image: '/assets/Programs assets/Customer.jpg'
+//   },
+//   {
+//     id: 7,
+//     title: 'Human Decision Making',
+//     image: '/assets/Programs assets/Human Decision.jpg'
+//   }
+
+// ]);
+// const socialIntelligence = [
+//   { title: 'Emotional Intelligence', ext: 'png' },
+//   { title: 'Leadership', ext: 'png' },
+//   { title: 'Negotiation', ext: 'png' },
+//   { title: 'Communication', ext: 'png' },
+//   { title: 'Public Relations', ext: 'png' },
+//   { title: 'Team Dynamics', ext: 'png' },
+//   { title: 'Cross-Cultural Intelligence', ext: 'png' },
+// ];
+
+const showAll = ref(false);
+// const showAllLabs = ref(false);
+// const showAllSocialIntelligence = ref(false);
 
 const toggleView = () => {
   showAll.value = !showAll.value
@@ -94,12 +163,17 @@ const plugin = Autoplay({
     </div>
   </section>
 
-  <!-- Section 2: Human-Centered Innovation -->
+
+
+
+
+
+
   <section class="bg-gray-50 flex flex-col">
     <NavBar />
     
     <main class="pt-24 flex-grow w-full max-w-7xl mx-auto px-4 pb-16">
-      <div class="mb-10 text-center md:text-left">
+      <div class="mb-10 text-center">
         <h1 class="text-[#289F7F] text-3xl md:text-4xl lg:text-5xl font-black mb-2">
           School of Human-Centered Innovation
         </h1>
