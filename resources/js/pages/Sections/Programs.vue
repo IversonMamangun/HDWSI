@@ -306,6 +306,181 @@ const plugin = Autoplay({
       </div>
       </main>
 </section>
+  <section class="bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA]">
+          <div class="max-w-7xl mx-auto px-4 py-16">
+        
+          <div class="flex flex-col lg:flex-row gap-12 items-center">
+          
+          <div class="w-full lg:w-2/3">
+            <div class="mb-10">
+              <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-2">
+                School of Digital Ethics
+              </h1>
+              <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">
+                Responsible Technology for Humanity
+              </h2>
+              <h3 class="text-xl sm:text-2xl font-semibold text-white">
+                Programs
+              </h3>
+            </div>
+            
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  AI Ethics
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Cyber Ethics
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Information Integrity
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Privacy
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Human Rights
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Responsible Innovation
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Technology Governance
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="w-full lg:w-1/3 flex justify-center mt-8 lg:mt-0">
+            <div class="w-full max-w-[400px] aspect-[3/2] rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-2xl">
+              <div class="w-full h-full rounded-2xl overflow-hidden bg-gray-200">
+                <img 
+                  src="/assets/Programs assets/School of Digital Ethics.jpg" 
+                  alt="School of Human Wellness" 
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="my-5 h-3 w-full bg-gradient-to-r from-white to-transparent"></div>
+        <div class="flex flex-col lg:flex-row gap-12 items-center">
+          
+          <div class="w-full lg:w-2/3">
+            <div class="mb-10">
+              <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-2">
+                School of Future Economy
+              </h1>
+              <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">
+                Preparing Tomorrow's Entrepreneurs
+              </h2>
+              <h3 class="text-xl sm:text-2xl font-semibold text-white">
+                Programs
+              </h3>
+            </div>
+            
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Digital Economy
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  AI Entrepreneurship
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Creator Economy
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Innovation
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  FinTech
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Smart Cities
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Green Economy
+                </div>
+              </li>
+
+              <li class="rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-lg">
+                <div class="h-full rounded-2xl p-3 sm:p-4 text-white font-bold text-xl sm:text-2xl bg-gradient-to-r from-[#2095E0] from-[65%] to-[#1A75BA] flex items-center">
+                  <span class="w-4 h-4 bg-white rounded-full mr-5 flex-shrink-0"></span>
+                  Circular Economy
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="w-full lg:w-1/3 flex justify-center mt-8 lg:mt-0">
+            <div class="w-full max-w-[400px] aspect-[3/2] rounded-2xl p-[3px] bg-gradient-to-r from-blue-300 to-blue-500 shadow-2xl">
+              <div class="w-full h-full rounded-2xl overflow-hidden bg-gray-200">
+                <img 
+                  src="/assets/Programs assets/School of Future Economy.jpg" 
+                  alt="School of Human Wellness" 
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+          
+        </div>
+      
+  </section> 
 
   <section class="bg-gray-50 flex flex-col">
     <NavBar />
