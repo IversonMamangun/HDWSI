@@ -1,4 +1,6 @@
 <script setup lang="ts">
+
+import { Head, Link } from '@inertiajs/vue3';
 import Autoplay from 'embla-carousel-autoplay'
 import { ref } from 'vue'
 import {
@@ -77,6 +79,8 @@ const carouselItems = ref([
 </script>
 
 <template>
+  <Head title="Events" />
+
   <section class="relative flex min-h-screen w-full items-start overflow-hidden pt-36 md:pt-40 lg:pt-48 pb-24">
     
     <img
@@ -111,15 +115,15 @@ const carouselItems = ref([
             <img src="assets/front-page/ICONS/arrow.png" alt="Arrow Right" class="h-4 w-4">
           </button>
 
-          <button class="flex items-center gap-2 rounded-md bg-gradient-to-r from-[#2095E0] to-[#289F7F] px-6 py-3 font-bold text-white transition hover:opacity-90">
+         <Link href="/register" class="flex items-center gap-2 rounded-md bg-gradient-to-r from-[#2095E0] to-[#289F7F] px-6 py-3 font-bold text-white transition hover:opacity-90">
             Be a Member
             <img src="assets/front-page/ICONS/arrow.png" alt="Arrow Right" class="h-4 w-4">
-          </button>
+          </Link>
 
-          <button class="flex items-center gap-2 rounded-md border-2 border-white px-6 py-3 font-bold text-white transition hover:bg-white/10">
+          <Link href="/register" class="flex items-center gap-2 rounded-md border-2 border-white px-6 py-3 font-bold text-white transition hover:bg-white/10">
             Enroll Soon
             <img src="assets/front-page/ICONS/arrow.png" alt="Arrow Right" class="h-4 w-4">
-          </button>
+          </Link>
         </div>
       </div>
 
