@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, Link } from '@inertiajs/vue3';
+import { Eye, EyeOff, Lock, Mail } from 'lucide-vue-next';
+import { ref } from 'vue';
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
@@ -7,8 +9,9 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import AuthBase from '@/layouts/AuthLayout.vue';
+import AuthLayout from '@/layouts/auth/AuthCardLayout.vue';
 import { register } from '@/routes';
+import { home } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 
@@ -17,13 +20,12 @@ defineProps<{
     canResetPassword: boolean;
     canRegister: boolean;
 }>();
+
+const showPassword = ref(false);
 </script>
 
 <template>
-    <AuthBase
-        title="Log in to your account"
-        description="Enter your email and password below to log in"
-    >
+    <AuthLayout title="Account Login">
         <Head title="Log in" />
 
         <div
@@ -37,74 +39,115 @@ defineProps<{
             v-bind="store.form()"
             :reset-on-success="['password']"
             v-slot="{ errors, processing }"
-            class="flex flex-col gap-6"
+            class="flex flex-col gap-4"
         >
-            <div class="grid gap-6">
-                <div class="grid gap-2">
-                    <Label for="email">Email address</Label>
+            <div class="grid gap-1.5">
+                <Label
+                    for="email"
+                    class="text-sm font-semibold text-hdwsi-blue"
+                >
+                    Email address or Phone Number
+                </Label>
+                <div class="relative">
+                    <Mail
+                        class="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-hdwsi-blue"
+                    />
                     <Input
                         id="email"
-                        type="email"
+                        type="text"
                         name="email"
                         required
                         autofocus
                         :tabindex="1"
                         autocomplete="email"
-                        placeholder="email@example.com"
+                        placeholder="Email or Phone Number"
+                        class="h-11 pl-10"
                     />
-                    <InputError :message="errors.email" />
                 </div>
+                <InputError :message="errors.email" />
+            </div>
 
-                <div class="grid gap-2">
-                    <div class="flex items-center justify-between">
-                        <Label for="password">Password</Label>
-                        <TextLink
-                            v-if="canResetPassword"
-                            :href="request()"
-                            class="text-sm"
-                            :tabindex="5"
-                        >
-                            Forgot password?
-                        </TextLink>
-                    </div>
+            <div class="grid gap-1.5">
+                <Label
+                    for="password"
+                    class="text-sm font-semibold text-hdwsi-blue"
+                >
+                    Password
+                </Label>
+                <div class="relative">
+                    <Lock
+                        class="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-hdwsi-blue"
+                    />
                     <Input
                         id="password"
-                        type="password"
+                        :type="showPassword ? 'text' : 'password'"
                         name="password"
                         required
                         :tabindex="2"
                         autocomplete="current-password"
                         placeholder="Password"
+                        class="h-11 px-10"
                     />
-                    <InputError :message="errors.password" />
+                    <button
+                        type="button"
+                        tabindex="-1"
+                        class="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-hdwsi-blue"
+                        @click="showPassword = !showPassword"
+                    >
+                        <EyeOff v-if="showPassword" class="size-4" />
+                        <Eye v-else class="size-4" />
+                    </button>
                 </div>
-
-                <div class="flex items-center justify-between">
-                    <Label for="remember" class="flex items-center space-x-3">
-                        <Checkbox id="remember" name="remember" :tabindex="3" />
-                        <span>Remember me</span>
-                    </Label>
-                </div>
-
-                <Button
-                    type="submit"
-                    class="mt-4 w-full"
-                    :tabindex="4"
-                    :disabled="processing"
-                    data-test="login-button"
-                >
-                    <Spinner v-if="processing" />
-                    Log in
-                </Button>
+                <InputError :message="errors.password" />
             </div>
+
+            <div class="flex items-center justify-between pt-1">
+                <Label
+                    for="remember"
+                    class="flex items-center gap-2 text-sm font-normal"
+                >
+                    <Checkbox id="remember" name="remember" :tabindex="3" />
+                    <span>Remember me</span>
+                </Label>
+
+                <TextLink
+                    v-if="canResetPassword"
+                    :href="request()"
+                    :tabindex="6"
+                    class="text-sm"
+                >
+                    Forget Password?
+                </TextLink>
+            </div>
+
+            <Button
+                type="submit"
+                :tabindex="4"
+                :disabled="processing"
+                class="h-11 w-full bg-hdwsi-blue font-bold tracking-wide uppercase hover:bg-hdwsi-blue/90"
+                data-test="login-button"
+            >
+                <Spinner v-if="processing" />
+                Log In
+            </Button>
+
+            <Button
+                as-child
+                :tabindex="5"
+                class="h-11 w-full bg-emerald-600 font-bold tracking-wide text-white uppercase hover:bg-emerald-600/90"
+            >
+                <Link :href="home()">Return Home</Link>
+            </Button>
 
             <div
                 class="text-center text-sm text-muted-foreground"
                 v-if="canRegister"
             >
                 Don't have an account?
-                <TextLink :href="register()" :tabindex="5">Sign up</TextLink>
+                <TextLink :href="register()" :tabindex="7">
+                    Register Here
+                </TextLink>
             </div>
         </Form>
-    </AuthBase>
+    </AuthLayout>
 </template>
