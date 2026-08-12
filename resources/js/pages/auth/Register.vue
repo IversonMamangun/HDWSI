@@ -38,7 +38,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
-import AuthBase from '@/layouts/AuthLayout.vue';
+import AuthLayout from '@/layouts/auth/AuthCardLayout.vue';
 import { cn } from '@/lib/utils';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
@@ -205,9 +205,7 @@ function initialStepFromErrors(): number {
 }
 
 const currentStep = ref(initialStepFromErrors());
-const isLastStep = computed(
-    () => currentStep.value === steps.value.length - 1,
-);
+const isLastStep = computed(() => currentStep.value === steps.value.length - 1);
 
 const showValidatingSpinner = ref(false);
 
@@ -272,9 +270,10 @@ const idDocumentMeta = computed(() => {
 </script>
 
 <template>
-    <AuthBase
-        title="Create an account"
+    <AuthLayout
+        title="Create an Account"
         description="Enter your details below to create your account"
+        max-width="md"
     >
         <Head title="Register" />
 
@@ -287,7 +286,7 @@ const idDocumentMeta = computed(() => {
                             class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-medium"
                             :class="
                                 index <= currentStep
-                                    ? 'bg-primary text-primary-foreground'
+                                    ? 'bg-hdwsi-blue text-white'
                                     : 'bg-muted text-muted-foreground'
                             "
                         >
@@ -297,7 +296,7 @@ const idDocumentMeta = computed(() => {
                             class="max-w-18 truncate text-center text-[11px] leading-tight sm:max-w-none sm:text-xs sm:whitespace-nowrap"
                             :class="
                                 index === currentStep
-                                    ? 'font-medium text-foreground'
+                                    ? 'font-semibold text-hdwsi-blue'
                                     : 'text-muted-foreground'
                             "
                         >
@@ -310,16 +309,26 @@ const idDocumentMeta = computed(() => {
                     <div
                         v-if="index < steps.length - 1"
                         class="mt-3 h-px flex-1"
-                        :class="index < currentStep ? 'bg-primary' : 'bg-muted'"
+                        :class="
+                            index < currentStep ? 'bg-hdwsi-blue' : 'bg-muted'
+                        "
                     />
                 </template>
             </div>
 
             <div class="grid gap-6">
                 <!-- Step: Personal info -->
-                <div v-show="currentStep === personalStepIndex" class="grid gap-6">
-                    <div class="grid gap-2">
-                        <Label for="first_name">First name</Label>
+                <div
+                    v-show="currentStep === personalStepIndex"
+                    class="grid gap-5"
+                >
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="first_name"
+                            class="text-sm font-semibold text-hdwsi-blue"
+                        >
+                            First name
+                        </Label>
                         <Input
                             id="first_name"
                             v-model="form.first_name"
@@ -328,6 +337,7 @@ const idDocumentMeta = computed(() => {
                             autofocus
                             autocomplete="given-name"
                             placeholder="Juan"
+                            class="h-11"
                             :aria-invalid="form.invalid('first_name')"
                             @blur="form.validate('first_name')"
                         />
@@ -337,14 +347,20 @@ const idDocumentMeta = computed(() => {
                         />
                     </div>
 
-                    <div class="grid gap-2">
-                        <Label for="middle_name">Middle name</Label>
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="middle_name"
+                            class="text-sm font-semibold text-hdwsi-blue"
+                        >
+                            Middle name
+                        </Label>
                         <Input
                             id="middle_name"
                             v-model="form.middle_name"
                             type="text"
                             autocomplete="additional-name"
                             placeholder="Santos"
+                            class="h-11"
                             :aria-invalid="form.invalid('middle_name')"
                             @blur="form.validate('middle_name')"
                         />
@@ -354,8 +370,13 @@ const idDocumentMeta = computed(() => {
                         />
                     </div>
 
-                    <div class="grid gap-2">
-                        <Label for="last_name">Last name</Label>
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="last_name"
+                            class="text-sm font-semibold text-hdwsi-blue"
+                        >
+                            Last name
+                        </Label>
                         <Input
                             id="last_name"
                             v-model="form.last_name"
@@ -363,6 +384,7 @@ const idDocumentMeta = computed(() => {
                             required
                             autocomplete="family-name"
                             placeholder="Dela Cruz"
+                            class="h-11"
                             :aria-invalid="form.invalid('last_name')"
                             @blur="form.validate('last_name')"
                         />
@@ -372,14 +394,20 @@ const idDocumentMeta = computed(() => {
                         />
                     </div>
 
-                    <div class="grid gap-2">
-                        <Label for="email">Email address</Label>
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="email"
+                            class="text-sm font-semibold text-hdwsi-blue"
+                        >
+                            Email address
+                        </Label>
                         <Input
                             id="email"
                             v-model="form.email"
                             type="email"
                             autocomplete="email"
                             placeholder="email@example.com"
+                            class="h-11"
                             :aria-invalid="form.invalid('email')"
                             @blur="form.validate('email')"
                         />
@@ -389,14 +417,20 @@ const idDocumentMeta = computed(() => {
                         />
                     </div>
 
-                    <div class="grid gap-2">
-                        <Label for="phone_number">Phone number</Label>
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="phone_number"
+                            class="text-sm font-semibold text-hdwsi-blue"
+                        >
+                            Phone number
+                        </Label>
                         <Input
                             id="phone_number"
                             v-model="form.phone_number"
                             type="tel"
                             autocomplete="tel"
                             placeholder="09XX XXX XXXX"
+                            class="h-11"
                             :aria-invalid="form.invalid('phone_number')"
                             @blur="form.validate('phone_number')"
                         />
@@ -407,8 +441,13 @@ const idDocumentMeta = computed(() => {
                     </div>
 
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_auto]">
-                        <div class="grid gap-2">
-                            <Label for="date_of_birth">Date of birth</Label>
+                        <div class="grid gap-1.5">
+                            <Label
+                                for="date_of_birth"
+                                class="text-sm font-semibold text-hdwsi-blue"
+                            >
+                                Date of birth
+                            </Label>
                             <Popover v-slot="{ close }">
                                 <PopoverTrigger as-child>
                                     <Button
@@ -417,7 +456,7 @@ const idDocumentMeta = computed(() => {
                                         variant="outline"
                                         :class="
                                             cn(
-                                                'w-full justify-start text-left font-normal',
+                                                'h-11 w-full justify-start text-left font-normal',
                                                 !dateValue &&
                                                     'text-muted-foreground',
                                             )
@@ -460,8 +499,13 @@ const idDocumentMeta = computed(() => {
                             />
                         </div>
 
-                        <div class="grid gap-2">
-                            <Label for="age">Age</Label>
+                        <div class="grid gap-1.5">
+                            <Label
+                                for="age"
+                                class="text-sm font-semibold text-hdwsi-blue"
+                            >
+                                Age
+                            </Label>
                             <Input
                                 id="age"
                                 :model-value="age"
@@ -469,24 +513,29 @@ const idDocumentMeta = computed(() => {
                                 readonly
                                 disabled
                                 placeholder="—"
-                                class="sm:w-20"
+                                class="h-11 sm:w-20"
                             />
                         </div>
                     </div>
 
-                    <p
-                        v-if="isMinor"
-                        class="text-sm text-muted-foreground"
-                    >
+                    <p v-if="isMinor" class="text-sm text-muted-foreground">
                         Since you're under 18, we'll also ask for a parent or
                         guardian's details later in this form.
                     </p>
                 </div>
 
                 <!-- Step: Address -->
-                <div v-show="currentStep === addressStepIndex" class="grid gap-6">
-                    <div class="grid gap-2">
-                        <Label for="address">Home address</Label>
+                <div
+                    v-show="currentStep === addressStepIndex"
+                    class="grid gap-5"
+                >
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="address"
+                            class="text-sm font-semibold text-hdwsi-blue"
+                        >
+                            Home address
+                        </Label>
                         <Input
                             id="address"
                             v-model="form.address"
@@ -494,6 +543,7 @@ const idDocumentMeta = computed(() => {
                             required
                             autocomplete="street-address"
                             placeholder="House no., street, barangay, city/municipality"
+                            class="h-11"
                             :aria-invalid="form.invalid('address')"
                             @blur="form.validate('address')"
                         />
@@ -505,16 +555,22 @@ const idDocumentMeta = computed(() => {
                 </div>
 
                 <!-- Step: Identity verification -->
-                <div v-show="currentStep === identityStepIndex" class="grid gap-6">
-                    <div class="grid gap-2">
-                        <Label for="id_type"
-                            >Government ID type
+                <div
+                    v-show="currentStep === identityStepIndex"
+                    class="grid gap-5"
+                >
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="id_type"
+                            class="text-sm font-semibold text-hdwsi-blue"
+                        >
+                            Government ID type
                             <span
                                 v-if="isMinor"
                                 class="font-normal text-muted-foreground"
                                 >(optional)</span
-                            ></Label
-                        >
+                            >
+                        </Label>
                         <Select
                             v-model="form.id_type"
                             :required="!isMinor"
@@ -522,7 +578,7 @@ const idDocumentMeta = computed(() => {
                         >
                             <SelectTrigger
                                 id="id_type"
-                                class="w-full"
+                                class="h-11 w-full"
                                 :aria-invalid="form.invalid('id_type')"
                             >
                                 <SelectValue placeholder="Select ID type" />
@@ -543,14 +599,20 @@ const idDocumentMeta = computed(() => {
                         />
                     </div>
 
-                    <div class="grid gap-2">
-                        <Label for="id_number">ID number</Label>
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="id_number"
+                            class="text-sm font-semibold text-hdwsi-blue"
+                        >
+                            ID number
+                        </Label>
                         <Input
                             id="id_number"
                             v-model="form.id_number"
                             type="text"
                             :required="!isMinor && !!form.id_type"
                             placeholder="Enter ID number"
+                            class="h-11"
                             :aria-invalid="form.invalid('id_number')"
                             @blur="form.validate('id_number')"
                         />
@@ -560,74 +622,81 @@ const idDocumentMeta = computed(() => {
                         />
                     </div>
 
-<div class="grid gap-2">
-    <Label for="id_document"
-        >Upload a photo or scan of your ID
-        <span v-if="isMinor" class="font-normal text-muted-foreground"
-            >(optional)</span
-        ></Label
-    >
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="id_document"
+                            class="text-sm font-semibold text-hdwsi-blue"
+                        >
+                            Upload a photo or scan of your ID
+                            <span
+                                v-if="isMinor"
+                                class="font-normal text-muted-foreground"
+                                >(optional)</span
+                            >
+                        </Label>
 
-    <input
-        id="id_document"
-        ref="idDocumentInput"
-        type="file"
-        accept="image/jpeg,image/png,application/pdf"
-        class="hidden"
-        @change="onIdDocumentChange"
-    />
+                        <input
+                            id="id_document"
+                            ref="idDocumentInput"
+                            type="file"
+                            accept="image/jpeg,image/png,application/pdf"
+                            class="hidden"
+                            @change="onIdDocumentChange"
+                        />
 
-    <button
-        v-if="!form.id_document"
-        type="button"
-        class="flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-6 text-sm text-muted-foreground hover:bg-muted/40"
-        :aria-invalid="form.invalid('id_document')"
-        @click="selectIdDocument"
-    >
-        <UploadIcon class="h-5 w-5" />
-        Click to select a file (JPG, PNG, or PDF, max 5MB)
-    </button>
+                        <button
+                            v-if="!form.id_document"
+                            type="button"
+                            class="flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-6 text-sm text-muted-foreground hover:border-hdwsi-blue hover:bg-hdwsi-blue/5 hover:text-hdwsi-blue"
+                            :aria-invalid="form.invalid('id_document')"
+                            @click="selectIdDocument"
+                        >
+                            <UploadIcon class="h-5 w-5" />
+                            Click to select a file (JPG, PNG, or PDF, max 5MB)
+                        </button>
 
-    <Attachment
-        v-else
-        :state="form.progress ? 'uploading' : 'idle'"
-        class="w-full"
-    >
-        <AttachmentMedia>
-            <FileTextIcon />
-        </AttachmentMedia>
-        <AttachmentContent>
-            <AttachmentTitle>{{ form.id_document.name }}</AttachmentTitle>
-            <AttachmentDescription>
-                {{
-                    form.progress
-                        ? `Uploading · ${form.progress.percentage}%`
-                        : idDocumentMeta
-                }}
-            </AttachmentDescription>
-        </AttachmentContent>
-        <AttachmentActions>
-            <AttachmentAction
-                aria-label="Remove selected ID document"
-                @click="removeIdDocument"
-            >
-                <XIcon />
-            </AttachmentAction>
-        </AttachmentActions>
-    </Attachment>
+                        <Attachment
+                            v-else
+                            :state="form.progress ? 'uploading' : 'idle'"
+                            class="w-full"
+                        >
+                            <AttachmentMedia>
+                                <FileTextIcon />
+                            </AttachmentMedia>
+                            <AttachmentContent>
+                                <AttachmentTitle>{{
+                                    form.id_document.name
+                                }}</AttachmentTitle>
+                                <AttachmentDescription>
+                                    {{
+                                        form.progress
+                                            ? `Uploading · ${form.progress.percentage}%`
+                                            : idDocumentMeta
+                                    }}
+                                </AttachmentDescription>
+                            </AttachmentContent>
+                            <AttachmentActions>
+                                <AttachmentAction
+                                    aria-label="Remove selected ID document"
+                                    @click="removeIdDocument"
+                                >
+                                    <XIcon />
+                                </AttachmentAction>
+                            </AttachmentActions>
+                        </Attachment>
 
-    <InputError
-        v-if="form.invalid('id_document')"
-        :message="form.errors.id_document"
-    />
-</div>
+                        <InputError
+                            v-if="form.invalid('id_document')"
+                            :message="form.errors.id_document"
+                        />
+                    </div>
                 </div>
 
                 <!-- Step: Guardian details (minors only) -->
                 <div
                     v-if="isMinor"
                     v-show="currentStep === guardianStepIndex"
-                    class="grid gap-6"
+                    class="grid gap-5"
                 >
                     <p class="text-sm text-muted-foreground">
                         Since you're under 18, we need a parent or legal
@@ -635,18 +704,20 @@ const idDocumentMeta = computed(() => {
                         submitted.
                     </p>
 
-                    <div class="grid gap-2">
-                        <Label for="guardian_first_name"
-                            >Guardian first name</Label
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="guardian_first_name"
+                            class="text-sm font-semibold text-hdwsi-blue"
                         >
+                            Guardian first name
+                        </Label>
                         <Input
                             id="guardian_first_name"
                             v-model="form.guardian_first_name"
                             type="text"
                             required
-                            :aria-invalid="
-                                form.invalid('guardian_first_name')
-                            "
+                            class="h-11"
+                            :aria-invalid="form.invalid('guardian_first_name')"
                             @blur="form.validate('guardian_first_name')"
                         />
                         <InputError
@@ -655,15 +726,19 @@ const idDocumentMeta = computed(() => {
                         />
                     </div>
 
-                    <div class="grid gap-2">
-                        <Label for="guardian_last_name"
-                            >Guardian last name</Label
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="guardian_last_name"
+                            class="text-sm font-semibold text-hdwsi-blue"
                         >
+                            Guardian last name
+                        </Label>
                         <Input
                             id="guardian_last_name"
                             v-model="form.guardian_last_name"
                             type="text"
                             required
+                            class="h-11"
                             :aria-invalid="form.invalid('guardian_last_name')"
                             @blur="form.validate('guardian_last_name')"
                         />
@@ -673,14 +748,20 @@ const idDocumentMeta = computed(() => {
                         />
                     </div>
 
-                    <div class="grid gap-2">
-                        <Label for="guardian_email">Guardian email</Label>
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="guardian_email"
+                            class="text-sm font-semibold text-hdwsi-blue"
+                        >
+                            Guardian email
+                        </Label>
                         <Input
                             id="guardian_email"
                             v-model="form.guardian_email"
                             type="email"
                             required
                             placeholder="guardian@example.com"
+                            class="h-11"
                             :aria-invalid="form.invalid('guardian_email')"
                             @blur="form.validate('guardian_email')"
                         />
@@ -690,16 +771,20 @@ const idDocumentMeta = computed(() => {
                         />
                     </div>
 
-                    <div class="grid gap-2">
-                        <Label for="guardian_relationship"
-                            >Relationship to applicant</Label
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="guardian_relationship"
+                            class="text-sm font-semibold text-hdwsi-blue"
                         >
+                            Relationship to applicant
+                        </Label>
                         <Input
                             id="guardian_relationship"
                             v-model="form.guardian_relationship"
                             type="text"
                             required
                             placeholder="Mother, Father, Legal guardian, etc."
+                            class="h-11"
                             :aria-invalid="
                                 form.invalid('guardian_relationship')
                             "
@@ -713,14 +798,23 @@ const idDocumentMeta = computed(() => {
                 </div>
 
                 <!-- Step: Security -->
-                <div v-show="currentStep === securityStepIndex" class="grid gap-6">
-                    <div class="grid gap-2">
-                        <Label for="password">Password</Label>
+                <div
+                    v-show="currentStep === securityStepIndex"
+                    class="grid gap-5"
+                >
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="password"
+                            class="text-sm font-semibold text-hdwsi-blue"
+                        >
+                            Password
+                        </Label>
                         <PasswordInput
                             id="password"
                             v-model="form.password"
                             required
                             autocomplete="new-password"
+                            class="h-11"
                             :aria-invalid="form.invalid('password')"
                             @blur="form.validate('password')"
                         />
@@ -730,15 +824,19 @@ const idDocumentMeta = computed(() => {
                         />
                     </div>
 
-                    <div class="grid gap-2">
-                        <Label for="password_confirmation"
-                            >Confirm password</Label
+                    <div class="grid gap-1.5">
+                        <Label
+                            for="password_confirmation"
+                            class="text-sm font-semibold text-hdwsi-blue"
                         >
+                            Confirm password
+                        </Label>
                         <PasswordInput
                             id="password_confirmation"
                             v-model="form.password_confirmation"
                             required
                             autocomplete="new-password"
+                            class="h-11"
                             :aria-invalid="
                                 form.invalid('password_confirmation')
                             "
@@ -757,7 +855,7 @@ const idDocumentMeta = computed(() => {
                         v-if="currentStep > 0"
                         type="button"
                         variant="outline"
-                        class="w-full sm:flex-1"
+                        class="h-11 w-full border-hdwsi-blue text-hdwsi-blue uppercase hover:bg-hdwsi-blue/5 sm:flex-1"
                         @click="currentStep -= 1"
                     >
                         Back
@@ -766,7 +864,7 @@ const idDocumentMeta = computed(() => {
                     <Button
                         v-if="!isLastStep"
                         type="button"
-                        class="w-full sm:flex-1"
+                        class="h-11 w-full bg-hdwsi-blue font-bold tracking-wide uppercase hover:bg-hdwsi-blue/90 sm:flex-1"
                         :disabled="form.validating"
                         @click="next"
                     >
@@ -777,7 +875,7 @@ const idDocumentMeta = computed(() => {
                     <Button
                         v-else
                         type="submit"
-                        class="w-full sm:flex-1"
+                        class="h-11 w-full bg-emerald-600 font-bold tracking-wide text-white uppercase hover:bg-emerald-600/90 sm:flex-1"
                         :disabled="form.processing"
                         data-test="register-user-button"
                     >
@@ -791,11 +889,11 @@ const idDocumentMeta = computed(() => {
                 Already have an account?
                 <TextLink
                     :href="login()"
-                    class="underline underline-offset-4"
+                    class="text-hdwsi-blue underline underline-offset-4"
                     :tabindex="6"
                     >Log in</TextLink
                 >
             </div>
         </form>
-    </AuthBase>
+    </AuthLayout>
 </template>
