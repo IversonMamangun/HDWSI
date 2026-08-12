@@ -57,7 +57,7 @@ const publicationCards = [
           class="absolute inset-0 z-0 h-full w-full object-cover" 
         />
         <div class="relative z-20 mx-auto w-full max-w-7xl px-4 pb-16 text-start sm:px-6 lg:px-8">
-          <h1 class="text-3xl font-black leading-tight tracking-wider text-white drop-shadow-xl sm:text-5xl md:text-7xl">
+          <h1 class="text-3xl font-black text-white drop-shadow-xl sm:text-5xl md:text-7xl">
             Publications
           </h1>
           <h2 class="mt-2 text-xl font-black text-[#2095E0] drop-shadow-md sm:text-3xl md:text-4xl">
