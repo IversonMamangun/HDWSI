@@ -45,12 +45,12 @@ const maxWidthClass = {
             class="relative z-10 flex w-full flex-col gap-6"
             :class="maxWidthClass[maxWidth]"
         >
-            <Card class="overflow-hidden rounded-xl p-0 shadow-2xl">
+            <Card class="gap-2 overflow-hidden rounded-xl p-0 shadow-2xl">
                 <Link
                     :href="home()"
-                    class="flex w-full items-center justify-center px-8 py-2"
+                    class="flex w-full items-center justify-center px-8 py-4"
                 >
-                    <AuthAppLogoIcon class="h-16" />
+                    <AuthAppLogoIcon class="h-20" />
                 </Link>
 
                 <CardHeader
