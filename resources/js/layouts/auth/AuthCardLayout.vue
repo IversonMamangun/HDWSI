@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import AppLogoIcon from '@/components/AppLogoIcon.vue';
+import AuthAppLogoIcon from '@/components/AuthAppLogoIcon.vue';
 import {
     Card,
     CardContent,
@@ -10,41 +10,64 @@ import {
 } from '@/components/ui/card';
 import { home } from '@/routes';
 
-defineProps<{
-    title?: string;
-    description?: string;
-}>();
+withDefaults(
+    defineProps<{
+        title?: string;
+        description?: string;
+        maxWidth?: 'sm' | 'md' | 'lg' | 'xl';
+    }>(),
+    {
+        maxWidth: 'sm',
+    },
+);
+
+const maxWidthClass = {
+    sm: 'max-w-sm',
+    md: 'max-w-md',
+    lg: 'max-w-lg',
+    xl: 'max-w-xl',
+};
 </script>
 
 <template>
     <div
-        class="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10"
+        class="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-hdwsi-blue p-6 md:p-10"
     >
-        <div class="flex w-full max-w-md flex-col gap-6">
-            <Link
-                :href="home()"
-                class="flex items-center gap-2 self-center font-medium"
-            >
-                <div class="flex h-9 w-9 items-center justify-center">
-                    <AppLogoIcon
-                        class="size-9 fill-current text-black dark:text-white"
-                    />
-                </div>
-            </Link>
+        <div
+            class="absolute inset-0 bg-cover bg-center"
+            style="
+                background-image: url('/assets/registration/auth_background2.jpg');
+            "
+        />
+        <div class="absolute inset-0 bg-hdwsi-blue/80" />
 
-            <div class="flex flex-col gap-6">
-                <Card class="rounded-xl">
-                    <CardHeader class="px-10 pt-8 pb-0 text-center">
-                        <CardTitle class="text-xl">{{ title }}</CardTitle>
-                        <CardDescription>
-                            {{ description }}
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent class="px-10 py-8">
-                        <slot />
-                    </CardContent>
-                </Card>
-            </div>
+        <div
+            class="relative z-10 flex w-full flex-col gap-6"
+            :class="maxWidthClass[maxWidth]"
+        >
+            <Card class="gap-2 overflow-hidden rounded-xl p-0 shadow-2xl">
+                <Link
+                    :href="home()"
+                    class="flex w-full items-center justify-center px-8 py-4"
+                >
+                    <AuthAppLogoIcon class="h-20" />
+                </Link>
+
+                <CardHeader
+                    class="gap-0 bg-hdwsi-blue px-8 py-2.5 text-center text-white"
+                >
+                    <CardTitle class="text-lg font-bold">
+                        {{ title }}
+                    </CardTitle>
+                    <CardDescription v-if="description" class="text-white/90">
+                        {{ description }}
+                    </CardDescription>
+                </CardHeader>
+
+                <CardContent class="px-8 py-6">
+                    <slot />
+                </CardContent>
+            </Card>
         </div>
     </div>
 </template>
