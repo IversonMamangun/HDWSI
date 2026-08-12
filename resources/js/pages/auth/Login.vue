@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Form, Head, Link } from '@inertiajs/vue3';
-import { Eye, EyeOff, Lock, Mail } from 'lucide-vue-next';
+import { Eye, EyeOff, Lock, User } from 'lucide-vue-next';
 import { ref } from 'vue';
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
@@ -49,7 +49,7 @@ const showPassword = ref(false);
                     Email address or Phone Number
                 </Label>
                 <div class="relative">
-                    <Mail
+                    <User
                         class="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-hdwsi-blue"
                     />
                     <Input
