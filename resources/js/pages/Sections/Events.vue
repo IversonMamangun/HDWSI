@@ -26,10 +26,10 @@ const events = ref<Event[]>([
   <div class="min-h-screen bg-gray-50 flex flex-col">
     <NavBar />
     <section 
-      class="pt-26 bg-cover bg-center" 
+      class="pt-24 pb-20 flex-grow w-fullmx-auto px-4" 
       style="background-image: url('/assets/events asssets/Events.jpg');"
     >
-      <div class="mb-12 text-center max-w-7xl mx-auto px-4">
+      <div class="mb-12 text-center max-w-7xl mx-auto px-4 pt-14">
         <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-black mb-4">
           Events
         </h1>
