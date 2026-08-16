@@ -17,12 +17,13 @@ test('profile information can be updated', function () {
 
     $response = $this
         ->actingAs($user)
-        ->patch('/profile', [
+        ->patch(route('profile.update'), [
             'first_name' => 'Test',
             'last_name' => 'User',
             'date_of_birth' => '1990-01-01',
             'address' => '123 Test Street',
-            'id_type' => 'Passport',
+            'id_type' => 'passport', 
+            'id_number' => 'AB1234567',
             'email' => 'test@example.com',
         ]);
 
@@ -41,12 +42,13 @@ test('email verification status is unchanged when the email address is unchanged
 
     $response = $this
         ->actingAs($user)
-        ->patch('/profile', [
+        ->patch(route('profile.update'), [ // Changed from '/profile' to route('profile.update')
             'first_name' => $user->first_name ?? 'Test',
             'last_name' => $user->last_name ?? 'User',
             'date_of_birth' => $user->date_of_birth ?? '1990-01-01',
             'address' => $user->address ?? '123 Test Street',
-            'id_type' => $user->id_type ?? 'Passport',
+            'id_type' => $user->id_type ?? 'passport', // Provide valid default
+            'id_number' => $user->id_number ?? 'AB1234567', // Provide valid default
             'email' => $user->email,
         ]);
 
